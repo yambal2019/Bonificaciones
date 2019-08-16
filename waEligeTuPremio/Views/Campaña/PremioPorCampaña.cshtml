@@ -1,0 +1,49 @@
+﻿
+@model waEligeTuPremio.Models.TBCampañaModel
+
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+@using (Html.BeginForm("DescargaArchivo", "Campaña", FormMethod.Post))
+{
+
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">Reporte de Premio Por Campaña</div>
+        <div class="panel-body">
+            <br />
+            <div class="row">
+                <div class="form-group">
+                    <label class="control-label col-md-1">
+                        Campaña:
+                    </label>
+                    <div class="col-md-3">
+                        @Html.DropDownListFor(m => m.SelectedCampañaId, Model.ListaCampaña, "- Seleccione una Campaña -", new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-default" style="vertical-align:middle" value="Descargar" name="Command">
+                            <span class="glyphicon glyphicon-download-alt"></span>
+                            Descargar
+                        </button>
+
+                    </div>
+                    <div class="col-md-2">
+                       
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+
+                </div>
+            </div>
+           
+
+            <br />
+        </div>
+    </div>
+
+}

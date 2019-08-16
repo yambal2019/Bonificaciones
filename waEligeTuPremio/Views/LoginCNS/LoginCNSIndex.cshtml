@@ -1,0 +1,100 @@
+﻿@model waEligeTuPremio.Models.csLogin
+@{
+    ViewBag.Title = "LoginCNSIndex";
+    Layout = "~/Views/Shared/_LayoutLoginCNS.cshtml";
+}
+
+<div class="form">
+    <div class="info">
+        <h1 style="color:#ff7810;">Elige tu Bonificación</h1>
+    </div>
+
+    <div class="container1">
+        <img src="~/images/regalo.jpg" style="height:100px;width:100px" />
+        <br />
+        <br />
+        <div style="text-align:left">@Html.ValidationSummary(true, "", new { @class = "text-danger" })</div>
+        <h5 style="text-align:left; color:#ff7810;"> <b>Código</b> </h5>
+        @Html.TextBoxFor(u => u.Usuario, new { @class = "form-control input-sm myTextBox", id = "txtUsr", autofocus = "autofocus" })
+        <div style="text-align:left;">@Html.ValidationMessageFor(u => u.Usuario, "", new { @class = "text-danger" })</div>
+        <h5 style="text-align:left; color:#ff7810;"> <b>Contraseña</b></h5>
+        @Html.PasswordFor(u => u.Contrasena, new { @class = "form-control input-sm myTextBox", id = "txtPassword" })
+        <div style="text-align:left;">@Html.ValidationMessageFor(u => u.Contrasena, "", new { @class = "text-danger" })</div>
+        <br />
+        <br />
+        <input type="submit" value="Iniciar Sesión" class="btn btn-default btn-block" id="btnValidar" />
+
+
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalTitulo"></h4>
+            </div>
+            <div class="modal-body">
+                <span id="mensaje"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                @*<button type="button" class="btn btn-primary" id="btnEliminar" data-eliminar="">Eliminar</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+
+    <script type='text/javascript'>
+
+        $(function () {
+
+            $("#btnValidar").click(function () {
+
+                var fileData = new FormData();
+
+                fileData.append('usr', $('#txtUsr').val());
+                fileData.append('password', $('#txtPassword').val());
+
+                $.ajax({
+                    url: '../LoginCNS/ValidarIngreso',
+                    type: "POST",
+                    contentType: false, // Not to set any content header
+                    processData: false, // Not to process data
+                    data: fileData,
+                    success: function (result) {
+                        var str = result;
+                        if (str.substring(0, 2) == "ok") {
+                            str = str.substring(3, str.length)
+                            window.location.href = '../LoginCNS/IndexUrl?id=' + str;
+                        }
+                        else {
+                            $("#myModal").modal();
+                            $("#myModalTitulo").text('Mensaje');
+                            $("#mensaje").text(result);
+                        }
+                    },
+                    error: function (err) {
+                        $("#myModalFinalizar").modal();
+                        $("#myModalTitulo").text('Mensaje');
+                        $("#mensaje").text(err.statusText);
+
+                    }
+                });
+            });
+
+
+        });
+
+
+    </script>
+
+}
+

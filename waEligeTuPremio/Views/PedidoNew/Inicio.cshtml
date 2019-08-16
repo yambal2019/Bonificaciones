@@ -1,0 +1,289 @@
+﻿@model waEligeTuPremio.Models.TBPremioModel
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_LayoutCNS.cshtml";
+}
+
+
+<link href="~/Content/Premio.css" rel="stylesheet" />
+
+
+<div class="containerCuerpo">
+    <header class="row Titulo">
+        <div class="row">
+
+            <div class="col-4 text-center">
+                <div class="blog-header-logo text-dark" href="#"> BONIFICACIONES ALTERNATIVAS</div>
+            </div>
+
+        </div>
+    </header>
+    <div class="row panel-body borde">
+        <div class="col-md-12" style="background-color:#fed5d5;">
+            <div class="row">
+                <div class="col-md-12"> <h4 style="color:#ff7810;"><b>¡Con Unique tu puedes elegir la bonificación que más te guste!</b></h4></div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <b style="color:#ff7810;">
+                        @ViewBag.mensaje
+                    </b>
+                </div>
+            </div>
+            <br />
+
+        </div>
+    </div>
+
+    <div class=" row box_width modules_product borde">
+        <div id="product_list" class="slide_box grid">
+
+            @if (Model.ListaNivelPremio != null || Model.ListaNivelPremio.Count() != 0)
+            {
+                foreach (var x in Model.ListaNivelPremio)
+                {
+                    var nivel = x.intNivel;
+
+                    <h3 class="tituloNivel"><span class="inner">Nivel - @x.intNivel</span></h3>
+
+                    <ul id="vm2product" class="feat vmproduct layout">
+                        <li class="rows  firstItem">
+
+                            <!--    Premios del nivel  -->
+                            @foreach (var elemento in Model.ListaPremio)
+                            {
+                                if (elemento.intNivel == nivel)
+                                {
+                                    <div class="col-md-3">
+
+
+                                        <div class="product-box front_w spacer">
+
+                                            <input type="hidden" class="quick_ids" name="virtuemart_product_id" value="5">
+                                            <div class="browseImage ">
+                                                <div class="lbl-box2">
+
+                                                    @if (elemento.bitSeleccionado)
+                                                    {
+                                                        <div class="new">Seleccionado</div>
+                                                    }
+                                                </div>
+
+                                                <div class="img-wrapper">
+
+                                                    <a href="">
+                                                        <div class="front">
+
+                                                            @if (elemento.Imagen == null)
+                                                            {
+
+
+                                                                <img src="~/images/interrogacion.jpg"
+                                                                     title="product05.jpg" alt="" class="lazy browseProductImage featuredProductImageFirst"
+                                                                     id="Img_to_Js_5" style="display: inline-block;background-color:yellow">
+
+                                                            }
+                                                            else
+                                                            {
+                                                                var base64 = Convert.ToBase64String(elemento.Imagen);
+                                                                var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+
+
+                                                                <img src=@imgSrc height="250" width="250"
+                                                                     title="product05.jpg" alt="" class="lazy browseProductImage featuredProductImageFirst"
+                                                                     id="Img_to_Js_5" style="display: inline-block;">
+
+                                                            }
+
+
+                                                        </div>
+
+                                                    </a>
+                                                </div>
+                                                <!-- -->
+
+                                            </div>
+
+                                            <div class="slide-hover">
+                                                <div class="wrapper">
+                                                    <div class="Title">
+                                                        <span class="stock-level">@Html.DisplayFor(modelItem => elemento.vchTitulo)</span>
+                                                    </div>
+
+                                                    <div class="stock">
+                                                        <span class="stock-level">Cantidad Disponible : @Html.DisplayFor(modelItem => elemento.smintStockrReal)</span>
+                                                    </div>
+                                                    <span style="color: #ff7810;">Descripción :</span>
+
+
+                                                    <div class="desc1" style="height: 130px;">
+                                                        <p>
+                                                            @Html.DisplayFor(modelItem => elemento.vchDescripcion)
+
+                                                        </p>
+                                                    </div>
+                                                    <div class="vm-product-price vm3pr-7">
+                                                        <div class="product-price Price marginbottom12" id="productPrice5">
+                                                        </div>
+
+                                                        <div class="clear"></div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="wrapper-slide">
+
+
+                                                    <div class="call-a-question list" style="height: 40px;">
+
+                                                        @if (!elemento.bitSeleccionado)
+                                                        {
+
+                                                           
+                                                            <input type="button" name="IsHelpFull" value="SELECCIONAR"  class="ask-a-question addtocart-button" data-val1="@elemento.intPedido" data-val2="@elemento.intNivel" data-val3="@elemento.intPremio">
+
+                                                        }
+                                                    </div>
+
+
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                    <div style="margin-bottom:25px">
+
+                                    </div>
+
+                                }
+
+                            }
+                            <div class="clear animate_bot_tabs" style="height:20px">
+
+                            </div>
+                            <!--    Fin Elemento Premio  -->
+                        </li>
+
+
+
+                    </ul>
+
+
+                }
+            }
+
+        </div>
+    </div>
+
+    <div class="row borde">
+
+        <div class="row " style="margin-right: 0px;  margin-left: 0px;  text-align: center!important; ">
+            <div class="centrarBoton">
+                <a href="#" class="button" data-toggle="modal" data-target="#exampleModal">CONFIRMAR SELECCION</a>
+            </div>
+        </div>
+        <div class="borde pie">
+
+            <small class="fb-footer-bottom__copyright__rights">© Todos los derechos reservados</small>
+            <small class="fb-footer-bottom__copyright__rights">v1 2019</small>
+            <a href="@Url.Content("~/Content/Terminos_Condiciones.pdf")" style="color: #fff;" target="_blank" class="">Terminos y Condiciones</a>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Información </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                La selección de tu bonificación ha sido recibida con éxito. Recuerda que puedes modificar la selección durante esta campaña.
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btnok btn btn-danger" type="button"> Ok</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('.btnok').click(function (e) {
+
+            $.ajax({
+                url: '@Url.Action("Retorno", "PedidoNew")',
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+
+                    window.location.href = '../LoginCNS/LoginCNSIndex';
+                },
+                error: function (errormessage) {
+
+                }
+            });
+
+        });
+
+
+        $('.addtocart-button').click(function (e) {
+            e.preventDefault()
+
+            var boton = $(this);
+
+          
+            var pedido = $(boton).attr("data-val1")
+            var nivel = $(boton).attr("data-val2")
+            var premio = $(boton).attr("data-val3")
+
+
+
+            if (pedido != '') {
+
+                $(boton).attr("disabled", true);
+             
+                var empObj = {
+                    idPedido: pedido,
+                    idNivel: nivel,
+                    idPremio: premio
+                };
+
+                $.ajax({
+                    url: '@Url.Action("AgregarPedidoDetalle", "PedidoNew")',
+                    data: JSON.stringify(empObj),
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+
+                        window.location.href = '../PedidoNew/Inicio';
+                    },
+                    error: function (errormessage) {
+                        // alert(errormessage.responseText);
+                    }
+                });
+
+            };
+
+        });
+
+    });
+
+</script>

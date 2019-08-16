@@ -1,0 +1,105 @@
+﻿@model IEnumerable<waEligeTuPremio.Models.SP_GetPremio>
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    div.gallery {
+        margin: 5px;
+        border: 1px solid #ccc;
+        float: left;
+        width: 150px;
+    }
+
+        div.gallery:hover {
+            border: 1px solid #777;
+        }
+
+        div.gallery img {
+            width: 100%;
+            height: auto;
+        }
+
+    div.desc {
+        padding: 15px;
+        text-align: center;
+    }
+</style>
+
+<div class="panel panel-default">
+    <div class="panel-heading text-center">Lista de Premios</div>
+    <div class="panel-body">
+        @*<div class="row">
+            <div class="col-md-2"><b>Imagen</b></div>
+            <div class="col-md-1"><b>Codigo</b></div>
+            <div class="col-md-5"><b>Producto</b></div>
+            <div class="col-md-1"><b>Stock</b></div>
+            <div class="col-md-2"><b>Stock Real</b></div>
+            <div class="col-md-1"><b>Punto</b></div>
+        </div>*@
+        <hr>
+        @foreach (var item in Model)
+        {
+            <div class="row">
+
+                <div class="gallery">
+                    @if (item.imgImagen == null)
+                    {
+                        <img src="~/images/interrogacion.jpg" alt="Imagen" width="300" height="200">
+                    }
+                    else
+                    {
+                        var base64 = Convert.ToBase64String(item.imgImagen);
+                        var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+
+                        <img src="@imgSrc" alt="Imagen" width="300" height="200" />
+                    }
+                </div>
+
+                <div class="row form-inline">
+                    <fieldset>
+                        <div class="col-md-1" style="text-align:left;">
+                            <b style="color:#ff7810">Código</b><br />
+                            <b>@Html.DisplayFor(modelItem => item.intCodigoCorto)</b>
+                        </div>
+                        <div class="col-md-2" style="text-align:justify;">
+                            <b style="color:#ff7810">TÍtulo</b><br />
+                            @Html.DisplayFor(modelItem => item.vchTitulo)
+                        </div>
+                        <div class="col-md-4" style="text-align:justify;">
+                            <b style="color:#ff7810">Descripción</b><br />
+                            @Html.DisplayFor(modelItem => item.vchDescripcion)
+                        </div>
+
+                        <div class="col-md-2" style="text-align:right;">
+                            <b style="color:#ff7810">Stock</b><br />
+                            <b>@Html.DisplayFor(modelItem => item.smintStock) Pzs.</b>
+                        </div>
+                        <div class="col-md-2" style="text-align:right;">
+                            <b style="color:#ff7810">Stock Real</b><br />
+                            <b>@Html.DisplayFor(modelItem => item.smintStockrReal) Pzs.</b>
+                        </div>
+                        @*<div class="col-md-2" style="text-align:right;">
+            <b style="color:#ff7810">Puntos</b><br />
+            <b>@Html.DisplayFor(modelItem => item.smintPuntos) Pts.</b>
+        </div>*@
+                        @*<div class="col-md-1" style="text-align:right;">
+            <button type="button" class="btn btn-default">Adicionar</button>
+        </div>*@
+                        <div class="col-md-1"></div>
+                    </fieldset>
+                </div>
+
+            </div>
+            <hr>
+        }
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+    </div>
+</div>

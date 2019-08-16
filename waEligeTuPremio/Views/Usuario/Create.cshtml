@@ -1,0 +1,68 @@
+﻿@model waEligeTuPremio.Models.SP_GetUsuario
+
+@Scripts.Render("~/bundles/jqueryval")
+
+<script type="text/javascript">
+        //script para poner el focus del modal en un componente
+        $(document).ready(function () {
+            $("#modalGenerica").on('shown.bs.modal', function () {
+                $(this).find('#vchUsuario').focus();
+            });
+        });
+</script>
+
+<section>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-shadow">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 style="text-align:center;">@ViewBag.Title</h4>
+                </div>
+            </div>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.intCodigo)
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.vchUsuario, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.vchUsuario, new { @class = "form-control input-sm", id = "vchUsuario", autofocus = "autofocus" })
+                            @Html.ValidationMessageFor(model => model.vchUsuario, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.vchNombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.vchNombre, new { @class = "form-control input-sm", id = "vchNombre" })
+                            @Html.ValidationMessageFor(model => model.vchNombre, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.intPerfil, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(model => model.intPerfil, ViewBag.Perfil as SelectList, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.intPerfil)
+                        </div>
+                    </div>
+                </div>
+                <br />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Salir
+                </button>
+                <input type="submit" value="Guardar" class="btn btn-default" />
+            </div>
+        </div>
+    }
+</section>
+
+

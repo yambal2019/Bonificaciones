@@ -1,0 +1,514 @@
+﻿@model IEnumerable<waEligeTuPremio.Models.SP_GetPremio>
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_LayoutCNS.cshtml";
+}
+
+
+<style>
+    div.gallery {
+        margin: 5px;
+        /*border: 1px solid #ccc;*/
+        float: left;
+        width: 250px; /*150px;*/
+    }
+
+        div.gallery:hover {
+            border: 1px solid #777;
+        }
+
+        div.gallery img {
+            width: 100%;
+            height: auto;
+        }
+
+    div.desc {
+        padding: 15px;
+        text-align: center;
+    }
+
+    /*css param subir archivo*/
+    .btn-file {
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            cursor: inherit;
+            display: block;
+        }
+</style>
+
+<div class="panel panel-default">
+    <div class="panel-heading text-center">Lista de Bonificaciones Alternativas</div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-11" style="background-color:#fed5d5;">
+                <div class="row">
+                    <div class="col-md-12"> <h4 style="color:#ff7810;"><b>¡Muchas felicidades!</b></h4></div> @*@ViewBag.Consultora*@
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <b style="color:#ff7810;">
+                            @ViewBag.mensaje
+                        </b>
+                    </div>
+                </div>
+                <br />
+
+            </div>
+            <div class="col-md-1 text-center">
+                <div class="row">
+                    <a href="@Url.Action("PedidoIndex", "Pedido", new { sap = 0, pto = 0})">
+                        <img src="~/images/Carrito.JPG" href="/path/to/image" style="height:60px;width:65px" />
+                    </a>
+                </div>
+                <div class=" row">
+                    <p style="color:#ff7810;">Ver Carrito</p>
+                </div>
+
+                @*<div class="row">
+                    <div class="col-md-12">
+                        <b>Puntos Disponible:</b>
+                    </div>
+                </div>
+                <div class="row" style="text-align:right;">
+                    <div class="col-md-12">
+                        <h4><b>@ViewBag.puntoDisponibles Pts.</b></h4>
+                    </div>
+                </div>*@
+            </div>
+        </div>
+
+        <br />
+        @{
+            int inicio = 0;
+            int opcion = 1;
+
+            while (inicio < Model.Count())
+            {
+                string premio = Model.ElementAt(inicio).VchGanamasNivelSAPTitulo;
+                //int sap = Model.ElementAt(inicio).intCodigoSAP;
+                //int pto = Model.ElementAt(inicio).smintPuntos;
+                //string nameButton = "btnAdd" + sap;
+                //string nameButtonJS = "#btnAdd" + sap;
+
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        @if (inicio < Model.Count())
+                        {
+                            <div class="col-md-4 text-center" style="border:solid 1px; height:600px; width:300px;">
+                                <div class="row">
+                                    <div class="col-md-12 text-center" style="height:370px;">
+
+                                        <h3> <b> Opción @opcion.ToString() </b></h3>
+                                        <h4 style="color:#ff7810;"><b>@Html.DisplayFor(modelItem => Model.ElementAt(inicio).vchTitulo)</b></h4>
+                                        <div class="gallery">
+
+                                            @if (Model.ElementAt(inicio).imgImagen == null)
+                                            {
+                                                <img src="~/images/interrogacion.jpg" alt="Imagen" width="600" height="400">
+                                            }
+                                            else
+                                            {
+                                                var base64 = Convert.ToBase64String(Model.ElementAt(inicio).imgImagen);
+                                                var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+
+                                                <img src="@imgSrc" alt="Imagen" width="600" height="400" />
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align:left;">
+                                        <b style="color:#ff7810">Stock: &nbsp;</b>
+                                        <b>@Html.DisplayFor(modelItem => Model.ElementAt(inicio).smintStockrReal)</b>
+                                        @*<b style="color:#ff7810">Código: &nbsp;</b>
+        <b>@Html.DisplayFor(modelItem => Model.ElementAt(inicio).intCodigoCorto)</b>*@
+                                    </div>
+                                </div>
+
+                                <div class="row" style="height:120px;">
+                                    <div class="col-lg-12" style="text-align:left">
+                                        @*<div class="col-lg-12" style="text-align:justify;">*@
+                                        <b style="color:#ff7810">Descripción</b><br />
+                                        @Html.DisplayFor(modelItem => Model.ElementAt(inicio).vchDescripcion)
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        @{
+                                            if (@ViewBag.pedidoExiste == 0)
+                                            {
+                                                if (Model.ElementAt(inicio).smintStockrReal == 0)
+                                                {
+                                                    <div class="col-md-12">
+                                                        <button type="button" disabled class="btn btn-default" style="width:100%" data-toggle="modal" data-target="#myModalAdd">
+                                                            Agotado
+                                                        </button>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    if (ViewBag.puntoDisponibles - Model.ElementAt(inicio).smintPuntos >= 0)
+                                                    {
+
+
+                                                        <div class="col-md-12">
+                                                            <button type="button" class="btn btn-default" style="width:100%"
+                                                                    onclick="DoActionAdd('@Model.ElementAt(inicio).VchGanamasNivelSAPTitulo', @Model.ElementAt(inicio).intCodigoSAP, @Model.ElementAt(inicio).smintPuntos)">
+                                                                @*id=@nameButton*@
+                                                                @*onclick="location.href='@Url.Action("PedidoIndex", "PedidoIndex", new { sap = Model.ElementAt(inicio).intCodigoSAP, pto = Model.ElementAt(inicio).smintPuntos })'"*@
+                                                                
+                                                                Seleccionar
+                                                            </button>
+                                                        </div>
+
+
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="col-md-12">
+                                                            <button type="button" class="btn btn-default" style="width:100%" data-toggle="modal" data-target="#myModalAdd">
+                                                                Seleccionar
+                                                            </button>
+                                                        </div>
+                                                    }
+                                                }
+
+                                            }
+
+                                            <div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+                                                <div class="modal-dialog modal-ms" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header" style="text-align:left;">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title" id="myModalLabel">Mensaje</h4>
+                                                        </div>
+                                                        <div class="modal-body" style="text-align:left;">
+                                                            <span>Solo puedes escoger UNA OPCIÓN. Elimina tu selección de premio actual si deseas agregar una nueva.</span>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        }
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-1"></div>
+                            inicio++;
+                            opcion++;
+                        }
+
+                        @if (inicio < Model.Count())
+                        {
+                            <div class="col-md-4 text-center" style="border:solid 1px; height:600px; width:300px;">
+                                <div class="row">
+                                    <div class="col-md-12 text-center" style="height:370px;">
+                                        <h3> <b> Opción @opcion.ToString() </b></h3>
+                                        <h4 style="color:#ff7810;"><b>@Html.DisplayFor(modelItem => Model.ElementAt(inicio).vchTitulo)</b></h4>
+                                        <div class="gallery">
+
+                                            @if (Model.ElementAt(inicio).imgImagen == null)
+                                            {
+                                                <img src="~/images/interrogacion.jpg" alt="Imagen" width="600" height="400">
+                                            }
+                                            else
+                                            {
+                                                var base64 = Convert.ToBase64String(Model.ElementAt(inicio).imgImagen);
+                                                var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+
+                                                <img src="@imgSrc" alt="Imagen" width="600" height="400" />
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align:left;">
+                                        <b style="color:#ff7810">Stock: &nbsp;</b>
+                                        <b>@Html.DisplayFor(modelItem => Model.ElementAt(inicio).smintStockrReal)</b>
+                                        @*<b style="color:#ff7810">Código: &nbsp;</b>
+        <b>@Html.DisplayFor(modelItem => Model.ElementAt(inicio).intCodigoCorto)</b>*@
+                                    </div>
+                                </div>
+
+                                <div class="row" style="height:120px;">
+                                    <div class="col-lg-12" style="text-align:left">
+                                        @*<div class="col-lg-12" style="text-align:justify;">*@
+                                        <b style="color:#ff7810">Descripción</b><br />
+                                        @Html.DisplayFor(modelItem => Model.ElementAt(inicio).vchDescripcion)
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        @{
+                                            if (@ViewBag.pedidoExiste == 0)
+                                            {
+
+                                                if (Model.ElementAt(inicio).smintStockrReal == 0)
+                                                {
+                                                    <div class="col-md-12">
+                                                        <button type="button" disabled class="btn btn-default" style="width:100%" data-toggle="modal" data-target="#myModalAdd">
+                                                            Agotado
+                                                        </button>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    if (ViewBag.puntoDisponibles - Model.ElementAt(inicio).smintPuntos >= 0)
+                                                    {
+
+
+                                                        <div class="col-md-12">
+                                                            <button type="button" class="btn btn-default" style="width:100%"
+                                                                    onclick="DoActionAdd('@Model.ElementAt(inicio).VchGanamasNivelSAPTitulo', @Model.ElementAt(inicio).intCodigoSAP, @Model.ElementAt(inicio).smintPuntos)">
+                                                                @*id=@nameButton*@
+                                                                @*onclick="location.href='@Url.Action("PedidoIndex", "PedidoIndex", new { sap = Model.ElementAt(inicio).intCodigoSAP, pto = Model.ElementAt(inicio).smintPuntos })'"*@
+                                                                Seleccionar
+                                                            </button>
+                                                        </div>
+
+
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="col-md-12">
+                                                            <button type="button" class="btn btn-default" style="width:100%" data-toggle="modal" data-target="#myModalAdd">
+                                                                Seleccionar
+                                                            </button>
+                                                        </div>
+                                                    }
+                                                }
+
+                                            }
+
+                                            <div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+                                                <div class="modal-dialog modal-ms" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header" style="text-align:left;">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title" id="myModalLabel">Mensaje</h4>
+                                                        </div>
+                                                        <div class="modal-body" style="text-align:left;">
+                                                            <span>Solo puedes escoger una opción. Elimina tu elección de premio si quieres agregar una nueva. </span>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        }
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-1"></div>
+                            inicio++;
+                            opcion++;
+                        }
+
+                        @if (inicio < Model.Count())
+                        {
+                            <div class="col-md-4 text-center" style="border:solid 1px; height:600px; width:300px;">
+                                <div class="row">
+                                    <div class="col-md-12 text-center" style="height:370px;">
+                                        <h3> <b> Opción @opcion.ToString() </b></h3>
+                                        <h4 style="color:#ff7810;"><b>@Html.DisplayFor(modelItem => Model.ElementAt(inicio).vchTitulo)</b></h4>
+                                        <div class="gallery">
+
+                                            @if (Model.ElementAt(inicio).imgImagen == null)
+                                            {
+                                                <img src="~/images/interrogacion.jpg" alt="Imagen" width="600" height="400">
+                                            }
+                                            else
+                                            {
+                                                var base64 = Convert.ToBase64String(Model.ElementAt(inicio).imgImagen);
+                                                var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+
+                                                <img src="@imgSrc" alt="Imagen" width="600" height="400" />
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align:left;">
+                                        <b style="color:#ff7810">Stock: &nbsp;</b>
+                                        <b>@Html.DisplayFor(modelItem => Model.ElementAt(inicio).smintStockrReal)</b>
+                                        @*<b style="color:#ff7810">Código: &nbsp;</b>
+        <b>@Html.DisplayFor(modelItem => Model.ElementAt(inicio).intCodigoCorto)</b>*@
+                                    </div>
+                                </div>
+
+                                <div class="row" style="height:120px;">
+                                    <div class="col-lg-12" style="text-align:left">
+                                        @*<div class="col-lg-12" style="text-align:justify;">*@
+                                        <b style="color:#ff7810">Descripción</b><br />
+                                        @Html.DisplayFor(modelItem => Model.ElementAt(inicio).vchDescripcion)
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        @{
+                                            if (@ViewBag.pedidoExiste == 0)
+                                            {
+
+                                                if (Model.ElementAt(inicio).smintStockrReal == 0)
+                                                {
+                                                    <div class="col-md-12">
+                                                        <button type="button" disabled class="btn btn-default" style="width:100%" data-toggle="modal" data-target="#myModalAdd">
+                                                            Agotado
+                                                        </button>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    if (ViewBag.puntoDisponibles - Model.ElementAt(inicio).smintPuntos >= 0)
+                                                    {
+
+
+                                                        <div class="col-md-12">
+                                                            <button type="button" class="btn btn-default" style="width:100%"
+                                                                    onclick="DoActionAdd('@Model.ElementAt(inicio).VchGanamasNivelSAPTitulo', @Model.ElementAt(inicio).intCodigoSAP, @Model.ElementAt(inicio).smintPuntos)">
+                                                                @*id=@nameButton*@
+                                                                @*onclick="location.href='@Url.Action("PedidoIndex", "PedidoIndex", new { sap = Model.ElementAt(inicio).intCodigoSAP, pto = Model.ElementAt(inicio).smintPuntos })'"*@
+                                                                Agregar
+                                                            </button>
+                                                        </div>
+
+
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="col-md-12">
+                                                            <button type="button" class="btn btn-default" style="width:100%" data-toggle="modal" data-target="#myModalAdd">
+                                                                Agregar
+                                                            </button>
+                                                        </div>
+                                                    }
+                                                }
+
+                                            }
+
+                                            <div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+                                                <div class="modal-dialog modal-sm" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header" style="text-align:left;">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title" id="myModalLabel" style="text-align:center;">Mensaje</h4>
+                                                        </div>
+                                                        <div class="modal-body" style="text-align:left;">
+                                                            <span>Solo puedes escoger una opción. Elimina tu elección de premio si quieres agregar una nueva. </span>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        }
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            inicio++;
+                            opcion++;
+                        }
+                    </div>
+                </div>
+                <br />
+
+            }
+        }
+        <br />
+    </div>
+
+    <!-- Este script permite mantener la posición de la página cuando se refresca ***************** -->
+    <script>
+        window.onload = function () {
+            var pos = window.name || 0;
+            window.scrollTo(0, pos);
+        }
+        window.onunload = function () {
+            window.name = self.pageYOffset || (document.documentElement.scrollTop + document.body.scrollTop);
+        }
+    </script>
+    <!-- Se cierra el Script -->
+
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalTitulo"></h4>
+            </div>
+            <div class="modal-body">
+                <span id="mensaje"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                @*<button type="button" class="btn btn-primary" id="btnEliminar" data-eliminar="">Eliminar</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function DoActionAdd(premio, intCodigoSAP, smintPuntos) {
+        //alert(premio + ' '+ intCodigoSAP +' '+ smintPuntos );
+
+        window.dataLayer.push({
+        "event": 'buttonClick',
+        "eventCategory": 'premio',
+            "eventAction": 'add',
+        "eventLabel": premio, //este es un identificador compuesto de “codigo del producto”-“campaña”-“año”,
+        "eventValue": 1
+        });
+
+        window.location.href = "@Url.Action("PedidoIndex", "Pedido")" + "?sap=" + intCodigoSAP + "&pto=" + smintPuntos;
+
+    }
+</script>
+

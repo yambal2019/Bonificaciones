@@ -1,0 +1,69 @@
+﻿@model IEnumerable<waEligeTuPremio.Models.SP_GetPedidoDetalleHistorico>
+
+
+<section>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-shadow">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 style="text-align:center;">@ViewBag.Title</h4>
+                </div>
+            </div>
+            <div class="panel-body">
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr style="background-color:#ff7810;color:white;">
+                            @*<th>
+                                Código
+                            </th>*@
+                            <th>
+                                Descripción
+                            </th>
+                            @*<th>
+                                Cant
+                            </th>*@
+                            @*<th>
+                                Ptos
+                            </th>
+                            <th>
+                                TPtos
+                            </th>*@
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                @*<td>
+                                    @Html.DisplayFor(modelItem => item.vchCodigoCorto)
+                                </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.vchDescripcion)
+                                </td>
+                                @*<td>
+                                    @Html.DisplayFor(modelItem => item.vchCantidad)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.vchPuntos)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.intTotalPuntos)
+                                </td>*@
+                            </tr>
+                        }
+
+                    </table>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Salir
+                </button>
+            </div>
+        </div>
+    }
+</section>
+

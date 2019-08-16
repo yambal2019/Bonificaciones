@@ -1,0 +1,222 @@
+﻿@model waEligeTuPremio.Models.csLogin
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script src="~/Scripts/modernizr-2.6.2.js"></script>
+        <script src="~/Scripts/jquery.uploadify.js"></script>*@
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Scripts/jquery.uploadify.js"></script>
+
+
+    <style>
+        .form {
+            position: relative;
+            z-index: 1;
+            background: #FFFFFF;
+            max-width: 350px;
+            margin: 0 auto 100px;
+            padding: 20px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+            border-bottom-right-radius: 3px;
+            text-align: center;
+        }
+
+        body {
+            background-color: #ff7810;
+            font-family: "Roboto", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container1 {
+            position: relative;
+            z-index: 1;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .btn-default {
+            color: white;
+            background-color: #ff7810;
+            border-color: #ff7810;
+        }
+    </style>
+
+</head>
+<body>
+
+
+
+    <div class="navbar navbar-default ">
+        <div class="container" style="background-color: white;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href='@Url.Action("Index", "Login")'><img src="~/images/logo.png" /></a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                    </li>
+                    <li>@Html.ActionLink("Staff", "LoginStaff", "LoginStaff", null, new { @style = "color:black;" })</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="form">
+        <div class="info">
+            <h1 style="color:#ff7810;">Elige tu Premio</h1>
+        </div>
+
+        @*<input type="checkbox" id="cerrar">
+            <label for="cerrar" id="btn-cerrar">X</label>
+            <div class="modal">
+                <div class="contenido">
+                    <h2>Visita nuestro blog</h2>
+                    <img src="http://lorempixel.com/200/200" alt="">
+                </div>
+            </div>*@
+
+
+
+
+        @*@using (Html.BeginForm("Index", "Login", FormMethod.Post))
+            {*@
+        <div class="container1">
+            <img src="~/images/regalo.jpg" style="height:100px;width:100px" />
+            <br />
+            <br />
+            <div style="text-align:left">@Html.ValidationSummary(true, "", new { @class = "text-danger" })</div>
+            <h5 style="text-align:left; color:#ff7810;"> <b>Código</b> </h5>
+            @Html.TextBoxFor(u => u.Usuario, new { @class = "form-control input-sm myTextBox", id = "txtUsr", autofocus = "autofocus" })
+            <div style="text-align:left;">@Html.ValidationMessageFor(u => u.Usuario, "", new { @class = "text-danger" })</div>
+            <h5 style="text-align:left; color:#ff7810;"> <b>Contraseña</b></h5>
+            @Html.PasswordFor(u => u.Contrasena, new { @class = "form-control input-sm myTextBox", id = "txtPassword" })
+            <div style="text-align:left;">@Html.ValidationMessageFor(u => u.Contrasena, "", new { @class = "text-danger" })</div>
+            <br />
+            <br />
+            <input type="submit" value="Iniciar Sesiónes" class="btn btn-default btn-block" id="btnValidar" />
+
+
+        </div>
+        @*}*@
+
+    </div>
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalTitulo"></h4>
+                </div>
+                <div class="modal-body">
+                    <span id="mensaje"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    @*<button type="button" class="btn btn-primary" id="btnEliminar" data-eliminar="">Eliminar</button>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*@section Scripts {
+
+        }*@
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+
+    <script type='text/javascript'>
+
+        $(function () {
+
+            $("#btnValidar").click(function () {
+
+                var fileData = new FormData();
+
+                fileData.append('usr', $('#txtUsr').val());
+                fileData.append('password', $('#txtPassword').val());
+
+                $.ajax({
+                    url: '../Login/ValidarIngreso',
+                    type: "POST",
+                    contentType: false, // Not to set any content header
+                    processData: false, // Not to process data
+                    data: fileData,
+                    success: function (result) {
+                        var str = result;
+                        if (str.substring(0, 2) == "ok") {
+                            str = str.substring(3, str.length)
+                            window.location.href = '../Login/IndexUrl?id=' + str;
+                        }
+                        else {
+                            $("#myModal").modal();
+                            $("#myModalTitulo").text('Mensaje');
+                            $("#mensaje").text(result);
+                        }
+                    },
+                    error: function (err) {
+                        $("#myModalFinalizar").modal();
+                        $("#myModalTitulo").text('Mensaje');
+                        $("#mensaje").text(err.statusText);
+
+                    }
+                });
+            });
+
+
+        });
+
+
+    </script>
+
+
+
+</body>
+</html>
+
+<div id="modalGenerica" class="modal fade in" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='contentModal'></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

@@ -1,0 +1,153 @@
+﻿
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    /*css param subir archivo*/
+    .btn-file {
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            cursor: inherit;
+            display: block;
+        }
+</style>
+<div class="panel panel-default">
+    <div class="panel-heading text-center">Calendario Anual</div>
+    <div class="panel-body">
+
+        <div class="row">
+            <div class="col-md-9">
+                Seleccione el archivo Excel con el Calendario Anual.
+            </div>
+            <div class="col-md-2">
+                @Html.ActionLink("Descargar Archivo", "downloadFile")
+            </div>
+            <div class="col-md-1">
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <div style="color:red;">@Html.Raw(ViewBag.Error)</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                @*<input type="file" name="excelfile" class="btn btn-default" id="FileUpload1" />*@
+                <span class="btn btn-default btn-file">
+                    Seleccionar Archivo <input type="file" id="FileUpload1">
+                </span>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-default" id="btnImportar">Subir Calendario</button>
+            </div>
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-default" id="btnAlta">Alta Calendario</button>
+            </div>
+            <div class="col-md-2">
+            </div>
+        </div>
+
+        <br />
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalTitulo"></h4>
+            </div>
+            <div class="modal-body">
+                <span id="mensaje"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                @*<button type="button" class="btn btn-primary" id="btnEliminar" data-eliminar="">Eliminar</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#btnImportar").click(function () {
+            //if (window.FormData !== undefined) {
+                var fileUpload = $("#FileUpload1").get(0);
+                var files = fileUpload.files;
+
+                var fileData = new FormData();
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append(files[i].name, files[i]);
+                }
+                fileData.append('username', 'Manas');
+
+                $.ajax({
+                    url: '../Calendario/UploadFiles',
+                    type: "POST",
+                    contentType: false, // Not to set any content header
+                    processData: false, // Not to process data
+                    data: fileData,
+                    success: function (result) {
+                        //alert(result);
+                        $("#myModal").modal();
+                        $("#myModalTitulo").text('Mensaje');
+                        $("#mensaje").text(result);
+                    },
+                    error: function (err) {
+                        $("#myModal").modal();
+                        $("#myModalTitulo").text('Mensaje');
+                        $("#mensaje").text(err.statusText);
+                        //alert(err.statusText);
+                    }
+                });
+            //}
+            //else { alert("Los Datos no son soportados"); }
+        });
+
+        $("#btnAlta").click(function () {
+            //alert('Hola');
+            $.ajax({
+                url: '../Calendario/AgregarCalendario',
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                //data: fileData,
+                success: function (result) {
+                    //alert(result);
+                    $("#myModal").modal();
+                    $("#myModalTitulo").text('Mensaje');
+                    $("#mensaje").text(result);
+                },
+                error: function (err) {
+                    $("#myModal").modal();
+                    $("#myModalTitulo").text('Mensaje');
+                    $("#mensaje").text(err.statusText);
+                    //alert(err.statusText);
+                }
+            });
+        });
+
+    });
+
+</script>
+

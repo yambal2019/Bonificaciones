@@ -1,0 +1,82 @@
+﻿@model IEnumerable<waEligeTuPremio.Models.SP_GetPedidoHistorico>
+
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_LayoutCNS.cshtml";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading text-center">Historico de Pedidos</div>
+    <div class="panel-body">
+
+
+        @using (Html.BeginForm("HistoricoIndex", "Historico", FormMethod.Post))
+        {
+            <br />
+
+            <div class="table-responsive">
+                <table class="table">
+                    <tr style="background-color:#ff7810;color:white;">
+                        <th>
+                            Pedido
+                        </th>
+                        <th>
+                            Código CNS
+                        </th>
+                        <th>
+                            Nombre
+                        </th>
+                        <th>
+                            Programa
+                        </th>
+                        @*<th>
+                            Puntos
+                        </th>*@
+                        <th>
+                            Fecha
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.intPedido)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.intCodigoConsultora)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.vchNombreCompleto)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.vchPlan)
+                            </td>
+                            @*<td>
+                                @Html.DisplayFor(modelItem => item.smintPuntosPlan)
+                            </td>*@
+                            <td>
+                                @Html.DisplayFor(modelItem => item.dttmFecha)
+                            </td>
+                            <td>
+                                <div class="col-md-10 btn btn-default">
+                                    @Html.ActionLink("Detalle", "Detalle", new { id = item.intPedido }, new { data_modal = "", style = "color:white" })
+                                </div>
+
+
+                                @*<div class="col-md-2">
+                                        <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Detalle", "Historico", new { id = item.intPedido, data_modal = ""})'">
+                                            <span class="glyphicon glyphicon-search"></span></button>
+                                    </div>*@
+
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        }
+    </div>
+</div>
+

@@ -1,0 +1,30 @@
+﻿@Scripts.Render("~/bundles/jqueryval")
+
+<script type="text/javascript">
+        //script para poner el focus del modal en un componente
+        $(document).ready(function () {
+            $("#modalGenerica").on('shown.bs.modal', function () {
+                //$(this).find('#vchUsuario').focus();
+            });
+        });
+</script>
+
+<section>
+    
+    <div class="modal-shadow">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 style="text-align:center;">@ViewBag.Title</h4>
+            </div>
+        </div>
+        <div class="panel-body">
+            <img src="~/images/cerrado.jpg" style="height:80px;width:140px" />
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+                Salir
+            </button>
+        </div>
+    </div>
+    
+</section>

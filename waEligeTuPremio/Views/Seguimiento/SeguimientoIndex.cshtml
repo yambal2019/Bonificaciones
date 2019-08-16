@@ -1,0 +1,103 @@
+﻿@model IEnumerable<waEligeTuPremio.Models.SP_GetListaPedidoDir>
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_LayoutCNS.cshtml";
+}
+
+@using (Html.BeginForm("SeguimientoIndex", "Seguimiento", FormMethod.Post))
+{
+
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">Listado de Consultoras por Directoras por GANAMAS</div>
+        <div class="panel-body">
+
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-3">
+                    @Html.Label("Plan", "Plan GANAMAS")
+                    @*@Html.DropDownList("Plan", (SelectList)ViewBag.Plan, new { @class = "form-control" })*@
+                    @*@Html.DropDownListFor(model => model.Nro, ViewBag.Plan as SelectList, new { @class = "form-control" })*@
+                    @Html.DropDownListFor(model => model.ElementAt(1).intCodigo, new SelectList(ViewBag.Plan, "Value", "Text", 0), "----------Seleccionar----------", new { @class = "form-control" })
+                </div>
+                <div class="col-md-2">
+                    <br />
+                    <button class="btn btn-default" style="vertical-align:middle" value="Descargar" name="Command">
+                        <span class="glyphicon glyphicon-search"></span>
+                        Buscar
+                    </button>
+                    @*@Html.ActionLink("Descargar Archivo", "DownloadFile", null, new { @style = "color:white;" })*@
+                </div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+
+            <br />
+
+            <div class="table-responsive">
+                <table class="table">
+                    <tr style="background-color:#ff7810;color:white;">
+                        <th>
+                            Código CNS
+                        </th>
+                        <th>
+                            Nombre
+                        </th>
+                        <th>
+                            Telf Casa
+                        </th>
+                        <th>
+                            Celular
+                        </th>
+                        <th>
+                            Telf Trabajo
+                        </th>
+                        <th>
+                            Dirección
+                        </th>
+                        <th>
+                            Realizo Pedido
+                        </th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.intCodigoCNS)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.vchNombreCompleto)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.vchTelCasa)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.vchCelular)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.vchTelTrabajo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.vchDireccionL1)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Pedido)
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+
+
+        </div>
+    </div>
+
+}
+

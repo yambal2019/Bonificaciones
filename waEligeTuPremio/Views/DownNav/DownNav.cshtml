@@ -1,0 +1,17 @@
+﻿@model waEligeTuPremio.Models.DownNavbarItem
+
+
+<div class="row" style="border-collapse: collapse; padding-left:0.5em;padding-right:0.5em;" >
+    
+        <p style="font-size:small; text-align:justify">
+            @Model.mensaje
+            @*<br />*@
+            @{
+                if (Model.mensaje != null)
+                {
+                    <a target="_blank" href="http://www.programasyanbal.com">www.programasyanbal.com</a>
+                }
+            }
+        </p>
+    
+</div>

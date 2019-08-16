@@ -1,0 +1,59 @@
+﻿@model waEligeTuPremio.Models.SP_MenuIDPerfil
+
+@Scripts.Render("~/bundles/jqueryval")
+
+@*<script type="text/javascript">
+        //script para poner el focus del modal en un componente
+        $(document).ready(function () {
+            $("#modalGenerica").on('shown.bs.modal', function () {
+                $(this).find('#vchNombre').focus();
+            });
+        });
+    </script>*@
+
+<section>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-shadow">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 style="text-align:center;">@ViewBag.Title</h4>
+                </div>
+            </div>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.intID)
+            @Html.TextBoxFor(model => model.intPerfil, new { @class = "hidden" })
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.nameOption, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.nameOption, new { @class = "form-control input-sm", id = "vchNombre", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.nameOption)
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.bitAcceso, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.bitAcceso)
+                            @Html.ValidationMessageFor(model => model.bitAcceso)
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Salir
+                </button>
+                <input type="submit" value="Guardar" class="btn btn-default" />
+            </div>
+        </div>
+    }
+</section>
+
+

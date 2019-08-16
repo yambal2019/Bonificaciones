@@ -1,0 +1,94 @@
+﻿@model IEnumerable<waEligeTuPremio.Models.SP_GetUsuario>
+
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading text-center">Lista de Usuarios</div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-3">
+                @Html.ActionLink("Nuevo Usuario", "Create", null, new { data_modal = "" })
+            </div>
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-3">
+                @Html.ActionLink("Descargar Listado", "downloadFile")
+            </div>
+        </div>
+
+
+        @using (Html.BeginForm("UsuarioIndex", "Usuario", FormMethod.Post))
+        {
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Código", "Código")
+                    @Html.TextBox("Codigo", null, new { @class = "form-control input-sm", id = "vchNombre", autofocus = "autofocus" })
+                </div>
+                <div class="col-md-3">
+                    @Html.Label("Nombre Usuario", "Nombre Usuario")
+                    @Html.TextBox("Nombre", null, new { @class = "form-control input-sm" })
+                </div>
+                <div class="col-md-2">
+                    <br />
+                    <button class="btn btn-default" style="vertical-align:middle" value="Buscar" name="Command">
+                        <span class="glyphicon glyphicon-search"></span>
+                        Buscar
+                    </button>
+                </div>
+                <div class="col-md-3">
+                </div>
+            </div>
+            <br />
+            <br />
+
+            <div class="table-responsive">
+                <table class="table">
+                    <tr style="background-color:#ff7810;color:white;">
+                        <th>
+                            Usuario
+                        </th>
+                        <th>
+                            Nombre
+                        </th>
+                        <th>
+                            Activo
+                        </th>
+                        <th>
+                            Perfil
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.vchUsuario)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.vchNombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.bitActivo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.vchPerfil)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "Edit", new { id = item.intCodigo }, new { data_modal = "" })
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        }
+    </div>
+</div>

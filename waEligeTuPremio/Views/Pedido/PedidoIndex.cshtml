@@ -1,0 +1,503 @@
+﻿@model IEnumerable<waEligeTuPremio.Models.SP_GetPedidoDetalleTemp>
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_LayoutCNS.cshtml";
+}
+
+<style>
+    div.gallery {
+        margin: 5px;
+        border: 1px solid #ccc;
+        float: left;
+        width: 150px;
+    }
+
+        div.gallery:hover {
+            border: 1px solid #777;
+        }
+
+        div.gallery img {
+            width: 100%;
+            height: auto;
+        }
+
+    div.desc {
+        padding: 15px;
+        text-align: center;
+    }
+
+    /*css param subir archivo*/
+    .btn-file {
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            cursor: inherit;
+            display: block;
+        }
+</style>
+
+<div class="panel panel-default">
+    <div class="panel-heading text-center">PREMIOS SELECCIONADOS</div>
+    <div class="panel-body">
+
+        <div class="row">
+            <div class="col-md-11" style="background-color:#fed5d5;">
+                <br />
+                <div class="row">
+                    <div class="col-md-8"><b style="color:#ff7810;">A continuación, la opción que seleccionaste:</b></div>
+                    <br />
+                </div>
+                <br />
+                <br />
+            </div>
+            <div class="col-md-1 text-center">
+                <div class="row">
+                    <a href="@Url.Action("InicioPedidoIndex", "InicioPedido")">
+                        <img src="~/images/regalo.jpg" href="/path/to/image" style="height:55px;width:60px" alt="Ver Premios" />
+                    </a>
+                </div>
+                <div class=" row">
+                    <p style="color:#ff7810;">Ver Premios</p>
+
+                </div>
+
+
+                @*<div class="row">
+                        <div class="col-md-12">
+                            <b>
+                                Pedido
+                                @{
+                                    if (@ViewBag.pedidoExiste == 0)
+                                    {
+                                        <b>&nbsp; en Proceso</b>
+                                    }
+                                    else
+                                    {
+                                        <b>&nbsp; Finalizado</b>
+                                    }
+                                }
+                            </b>
+                        </div>
+                    </div>*@
+            </div>
+        </div>
+
+
+        @*<div class="row">
+                <div class="col-md-10"></div>
+                <div class="col-md-2 btn btn-default">
+                    @Html.ActionLink("Add Premios", "InicioPedidoIndex", "InicioPedido", null, new { @style = "color:white;" })
+                </div>
+            </div>*@
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-12">
+                @foreach (var item in Model)
+                {
+                    <div class="row">
+
+                        <div class="gallery">
+
+                            @if (item.imgImagen == null)
+                            {
+                                <img src="~/images/interrogacion.jpg" alt="Imagen"> @*width="300" height="200"*@
+                            }
+                            else
+                            {
+                                var base64 = Convert.ToBase64String(item.imgImagen);
+                                var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+
+                                <img src="@imgSrc" alt="Imagen" />
+                            }
+
+                        </div>
+
+                        <div class="row form-inline">
+
+                            <fieldset id="fdrow">
+                                <div class="col-md-2" style="text-align:left;">
+                                    @*<b style="color:#ff7810">Código</b><br />
+        <b>@Html.DisplayFor(modelItem => item.intCodigoCorto)</b>*@
+                                    <b style="color:#ff7810">Descripción</b><br />
+                                    @Html.DisplayFor(modelItem => item.vchDescripcion)
+                                </div>
+                                @*<div class="col-md-7" style="text-align:justify;">
+                                    <b style="color:#ff7810">Descripción</b><br />
+                                    @Html.DisplayFor(modelItem => item.vchDescripcion)
+                                </div>*@
+                                @*<div class="col-md-2">
+                                        @{
+                                            if (@ViewBag.pedidoExiste == 0)
+                                            {
+                                                <b style="color:#ff7810">Cantidad</b><br />
+
+                                                @Html.TextBoxFor(model => item.smintCantidad,
+                                                new
+                                                {
+                                                    @type = "number",
+                                                    min = "1",
+                                                    step = "1",
+                                                    @class = "form-control input-md",
+                                                    style = "width:100%",
+                                                    onblur = "updateCant(" + item.intCodigoSAP + ", value, "+ item.smintCantidad +");",
+                                                    onkeypress = "updateCant(" + item.intCodigoSAP + ", value, " + item.smintCantidad + ");"
+                                                })
+                                            }
+                                            else
+                                            {
+                                                <b style="color:#ff7810">Cantidad</b><br />
+                                                @Html.TextBoxFor(model => item.smintCantidad,
+                                                new
+                                                {
+                                                    @type = "number",
+                                                    min = "1",
+                                                    step = "1",
+                                                    @class = "form-control input-md",
+                                                    style = "width:100%",
+                                                    onblur = "updateCant(" + item.intCodigoSAP + ", value);",
+                                                    onkeypress = "updateCant(" + item.intCodigoSAP + ", value);",
+                                                    @readonly = "readonly"
+                                                })
+                                            }
+                                        }
+
+                                    </div>*@
+                                @*<div class="col-md-2" style="text-align:right;">
+                                        <b style="color:#ff7810">Puntos</b><br />
+                                        <b>@Html.DisplayFor(modelItem => item.smintPuntos) Pts</b>
+                                    </div>
+                                    <div class="col-md-2" style="text-align:right;">
+                                        <b style="color:#ff7810">Total Pts</b><br />
+                                        <b>@Html.DisplayFor(modelItem => item.intTotalPuntos) Pts</b>
+                                    </div>*@
+                                @{
+                                    if (@ViewBag.pedidoExiste == 0)
+                                    {
+                                        <div class="col-md-2">
+                                            @*@Html.ActionLink("Eliminar", "Delete", new { sap = item.intCodigoSAP }, new { style = "color:white" })*@
+                                            <button type="button" class="btn btn-default" style="width:100%"
+                                                    onclick="DoActionDelete('@item.VchGanamasNivelSAPTitulo', @item.intCodigoSAP)">
+                                                Eliminar
+                                            </button>
+
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        @*<div class="col-md-2 btn btn-default" style="color:white;">Eliminar</div>*@
+                                        <div class="col-md-2">
+                                            @*@Html.ActionLink("Eliminar", "Delete", new { sap = item.intCodigoSAP }, new { style = "color:white" })*@
+                                            <button type="button" disabled class="btn btn-default" style="width:100%" onclick="location.href='@Url.Action("Delete", "Pedido", new { sap = item.intCodigoSAP })'">Eliminar</button>
+                                        </div>
+                                    }
+                                }
+
+                                <div class="col-md-1"></div>
+
+                            </fieldset>
+                        </div>
+                    </div>
+                    <hr>
+                }
+            </div>
+
+            @*<div class="col-md-2">
+                    @{
+                        if (@ViewBag.pedidoExiste == 0)
+                        {
+                            <button type="button" class="btn btn-default" id="btnAdd" style="width:100%">Add Premios</button>
+                        }
+                        else
+                        {
+                            <button type="button" disabled class="btn btn-default" id="btnAdd" style="width:100%">Add Premios</button>
+                        }
+                    }
+
+                    <div class="col-md-12 alert alert-info">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <b>Puntos Disponible:</b>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="text-align:right;">
+                                <h3><b>@ViewBag.puntoDisponibles Pts.</b></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+
+        <div class="row">
+            @*<div class="col-md-10"></div>*@
+            <div class="col-md-12">
+                @{
+
+                    if (@ViewBag.pedidoExiste == 0)
+                    {
+                        if (@ViewBag.puntoDisponibles != 0)
+                        {
+                                <button type="button" disabled class="btn btn-default" style="width:100%" data-toggle="modal" data-target="#myModalFinalizar">
+                                    Confirmar Elección
+                                </button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-default" style="width:100%" data-toggle="modal" data-target="#myModalFinalizar">
+                                Confirmar Elección
+                            </button>
+                        }
+                        @*<button type="button" class="btn btn-default" style="width:100%" data-toggle="modal" data-target="#myModalFinalizar">
+                                Finalizar Pedido
+                            </button>*@
+                    }
+                    else
+                    {
+                        if (@ViewBag.puntoDisponibles == 0)
+                        {
+                            <button type="button" disabled class="btn btn-default" style="width:100%" data-toggle="modal" data-target="#myModalFinalizar">
+                                Confirmar Elección
+                            </button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-default" style="width:100%" data-toggle="modal" data-target="#myModalFinalizar">
+                                Confirmar Elección
+                            </button>
+                        }
+
+                        @*<button type="button" disabled class="btn btn-default" style="width:100%" data-toggle="modal" data-target="#myModalFinalizar">
+                                Pedido Finalizado
+                            </button>*@
+                    }
+                }
+
+                @*modal*@
+                <div class="modal fade" id="myModalFinalizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Confirmar Pedido</h4>
+                            </div>
+                            <div class="modal-body">
+                                Al escoger la opción FINALIZAR PEDIDO ya no podrás realizar ningún cambio. ¿Deseas continuar? <span><b>  </b></span>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                <input type="submit" value="Si" class="btn btn-default" style="background-color:white; color:black;" id="btnFinalizar" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+    </div>
+
+    <!-- Este script permite mantener la posición de la página cuando se refresca ***************** -->
+    <script>
+        window.onload = function () {
+            var pos = window.name || 0;
+            window.scrollTo(0, pos);
+        }
+        window.onunload = function () {
+            window.name = self.pageYOffset || (document.documentElement.scrollTop + document.body.scrollTop);
+        }
+    </script>
+    <!-- Se cierra el Script -->
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalTitulo"></h4>
+            </div>
+            <div class="modal-body">
+                <span id="mensaje"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                @*<button type="button" class="btn btn-primary" id="btnEliminar" data-eliminar="">Eliminar</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Finalizar Pedido-->
+<div class="modal fade" id="myModalPedido" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalTituloPedido"></h4>
+            </div>
+            <div class="modal-body">
+                <span id="mensajePedido"></span>
+            </div>
+            <div class="modal-footer">
+                @*<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>*@
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="location.href='@Url.Action("PedidoIndex", "Pedido")'">Cerrar </button>
+                @*<button type="button" class="btn btn-primary" id="btnEliminar" data-eliminar="">Eliminar</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type='text/javascript'>
+
+    function updateCant(sap, cant, cantServidor) {
+
+        //var value = sap + ', ' + cant;
+        //alert(value);
+
+        var fileData = new FormData();
+
+        fileData.append('sap', sap);
+        fileData.append('cant', cant);
+        fileData.append('cantServidor', cantServidor);
+
+
+            $.ajax({
+                url: '../Pedido/UpdatePremioCant',
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: fileData,
+                success: function (result) {
+
+                    if (result == "ok")
+                    {
+                        window.location.href = '../Pedido/PedidoIndex';
+
+                        @*$.ajax({
+                            url: '../Pedido/PedidoIndex',
+                            data: { sap: 0 }
+                        }).done(function () {
+                            @{var puntos = 0;
+                            foreach (var i in Model)
+                            {
+                                puntos = puntos + i.intTotalPuntos;
+                            }
+                            ViewBag.puntoDisponibles = puntos;
+                        }
+                        });*@
+                    }
+                    else {
+                        $("#myModal").modal();
+                        $("#myModalTitulo").text('Mensaje');
+                        $("#mensaje").text(result);
+                    }
+                },
+                error: function (err) {
+                    $("#myModal").modal();
+                    $("#myModalTitulo").text('Mensaje');
+                    $("#mensaje").text(err.statusText);
+                }
+            });
+    }
+
+    $(function () {
+
+        $("#btnAdd").click(function () {
+            $.ajax({
+                url: '../Pedido/AddPremio',
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                //data: fileData,
+                success: function (result) {
+
+                    if (result == "ok")
+                        window.location.href = '../InicioPedido/InicioPedidoIndex';
+                    else {
+                    $("#myModal").modal();
+                    $("#myModalTitulo").text('Mensaje');
+                    $("#mensaje").text(result);
+                    }
+                },
+                error: function (err) {
+                    $("#myModal").modal();
+                    $("#myModalTitulo").text('Mensaje');
+                    $("#mensaje").text(err.statusText);
+                    //alert(err.statusText);
+                }
+            });
+        });
+
+
+        $("#btnFinalizar").click(function () {
+            $("#myModalFinalizar").modal('hide');
+
+            $.ajax({
+                url: '../Pedido/FinalizarPedido',
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                //data: fileData,
+                success: function (result) {
+
+                    $("#myModalPedido").modal();
+                    $("#myModalTituloPedido").text('Mensaje');
+                    $("#mensajePedido").text(result);
+                    //}
+                },
+                error: function (err) {
+                    $("#myModal").modal();
+                    $("#myModalTitulo").text('Mensaje');
+                    $("#mensaje").text(err.statusText);
+                    //alert(err.statusText);
+                }
+            });
+        });
+
+
+    });
+
+
+
+    function DoActionDelete(premio, intCodigoSAP) {
+        //alert(premio + ' '+ intCodigoSAP +' '+ smintPuntos );
+
+        window.dataLayer.push({
+        "event": 'buttonClick',
+        "eventCategory": 'premio',
+            "eventAction": 'delete',
+        "eventLabel": premio, //este es un identificador compuesto de “codigo del producto”-“campaña”-“año”,
+        "eventValue": 1
+        });
+
+        window.location.href = "@Url.Action("Delete", "Pedido")" + "?sap=" + intCodigoSAP ;
+
+    }
+
+
+
+</script>

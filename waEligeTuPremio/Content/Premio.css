@@ -1,0 +1,385 @@
+﻿.Titulo {
+    color: #fff;
+    background-color: #777777;
+    border-color: #bfbfbf;
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    text-align: center;
+    font-family: "Arimo",sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.responsive-tabs__panel {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+#product_list {
+    position: relative;
+    z-index: 1;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+ul.layout .product-box .browseImage {
+    position: relative;
+    width: 100;
+}
+
+.lbl-box2 {
+    display: inline-block;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    text-align: center;
+    /* top: -14px; */
+    /* left: -14px; */
+    width: 100%;
+    z-index: 99;
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: 600px;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+    .lbl-box2 .newafter {
+        position: absolute;
+        right: -1px;
+        top: 0;
+        width: 7px;
+        height: 4px;
+        background: url(../images/label-new.png) left bottom no-repeat;
+    }
+
+    .lbl-box2 .newbefore {
+        position: absolute;
+        left: 0;
+        bottom: 0px;
+        width: 4px;
+        height: 7px;
+        background: url(../images/label-new.png) right top no-repeat;
+    }
+
+
+    .lbl-box2 .new {
+        position: relative;
+        top: 105px;
+        /* left: -28px; */
+        height: 30px;
+        width: 210px;
+        background: #2ECC71;
+        position: relative;
+        -webkit-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -kthtml-transform: rotate(-45deg);
+        transform: rotate(0deg);
+        font-size: 18px;
+    }
+
+.prod-row.vm-col-4 {
+    float: left;
+    width: 25%;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+ul.layout .product-box {
+    background-color: #F2F2F5;
+    border: 2px solid #e6e6e6;
+    padding: 10px;
+    border-radius: 3px;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -ms-transition: all 0.3s linear;
+    -kthtml-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+}
+
+    ul.layout .product-box:hover {
+        cursor: pointer;
+        border-color: #ff7810;
+    }
+
+.box_width.modules_product .slide_box ul.layout2 li.rows, .box_width.modules_product .slide_box ul.layout li.rows {
+    margin: 0px -15px;
+    width: auto !important;
+}
+
+html.no-touch .animate_bot_tabs {
+    right: -100px;
+    opacity: 0;
+    position: relative;
+}
+
+.clear {
+    clear: both;
+}
+
+.modules_product #product_list.grid ul.layout, .modules_product #product_list.grid ul.layout .paddingtop8, .modules_product #product_list.grid ul.layout .paddingtop8 > span {
+    text-align: left;
+    margin: 0;
+}
+
+ul.layout {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+    ul.layout .prod-row .lbl-box {
+        display: inline-block;
+        height: 100px;
+        overflow: hidden;
+        position: absolute;
+        text-align: center;
+        top: -14px;
+        right: -14px;
+        width: 100px;
+        z-index: 99;
+        font-size: 14px;
+        line-height: 24px;
+        font-weight: bold;
+        color: #fff;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    ul.layout .product-box .browseImage a {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        height: 250px;
+        display: inline-block;
+        text-align: center;
+    }
+
+a {
+    outline: none !important;
+}
+
+ul.layout .product-box a .front {
+    -webkit-transform: rotateX(0deg) rotateY(0deg);
+    -webkit-transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+    -moz-transform: rotateX(0deg) rotateY(0deg);
+    -moz-transform-style: preserve-3d;
+    -moz-backface-visibility: hidden;
+    -o-transition: all .4s ease-in-out;
+    -ms-transition: all .4s ease-in-out;
+    -moz-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+    z-index: 9;
+    position: relative;
+}
+
+    ul.layout .product-box a .front img {
+        display: inline-block;
+    }
+
+ul.layout .product-box .browseImage img {
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+    line-height: 100%;
+}
+
+img {
+    vertical-align: middle;
+}
+
+img {
+    border: none;
+}
+
+ul.layout .product-box a .back {
+    -webkit-transform: rotateY(-180deg);
+    -webkit-transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+    -moz-transform: rotateY(-180deg);
+    -moz-transform-style: preserve-3d;
+    -moz-backface-visibility: hidden;
+    -o-transition: all .4s ease-in-out;
+    -ms-transition: all .4s ease-in-out;
+    -moz-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: auto;
+    max-height: 280px;
+    max-width: 100%;
+    width: 100%;
+}
+
+ul.layout .product-box .addtocart-button {
+    padding: 0 20px;
+}
+
+.button, .addtocart-button, .vm-button-correct, .k2user .button {
+    font-weight: 300;
+    padding: 0 30px;
+    height: 40px;
+    font-size: 14px;
+    line-height: 38px;
+    display: inline-block;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    border-bottom: 2px solid #c0392b;
+    text-decoration: none;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -ms-transition: all 0.3s linear;
+    -kthtml-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+}
+
+.button, .addtocart-button, .vm-button-correct, .k2user .button {
+    background: #ff7810 !important;
+    border-bottom: 2px solid #ff7817 !important;
+}
+
+a {
+    outline: none !important;
+}
+
+.button:hover, .button:focus, .addtocart-button:hover, .addtocart-button:focus {
+    background: #34495e !important;
+    border-bottom: 2px solid #2c3e50 !important;
+    color: #fff;
+    text-decoration: none;
+}
+
+.paddingtop8 {
+    padding-top: 15px;
+    padding-bottom: 0px;
+    margin-bottom: -10px;
+}
+
+.Title {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    line-height: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #ff7810;
+    text-align: center;
+    height: 39px;
+}
+
+.box_width.modules_product .slide_box ul.layout2 .prod-row.vm-col-4, .box_width.modules_product .slide_box ul.layout .prod-row.vm-col-4 {
+    float: left;
+    width: 25%;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+.containerCuerpo {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#product_list {
+    position: relative;
+    z-index: 1;
+}
+
+.slide_box {
+    width: 100%;
+}
+
+    .slide_box ul.layout2 .prod-row, .slide_box ul.layout .prod-row {
+        margin-right: 0;
+        float: none;
+        width: auto;
+    }
+
+.tituloNivel {
+    border-bottom: 2px solid #eee;
+    display: inline-block;
+    width: 100%;
+    margin-top: 0;
+    font-size: 24px;
+    color: #222;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+    .tituloNivel span:after {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 2px;
+        background-color: #ff7810;
+        bottom: -2px;
+        left: 0;
+    }
+
+    .tituloNivel span {
+        font-size: 24px;
+        color: #ff7810;
+        font-weight: 600;
+        float: left;
+        text-transform: capitalize;
+        padding-bottom: 12px;
+        bottom: 0;
+        position: relative;
+    }
+
+
+.borde {
+    border-right: 1px solid #bfbfbf;
+    border-left: 1px solid #bfbfbf;
+}
+
+.bordeTotal {
+    border: 1px solid #bfbfbf;
+}
+
+.pie {
+    padding-bottom: 15px;
+    text-align: center;
+    padding-top: 10px;
+    background-color: #777777;
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
+    margin-top: 10px;
+    color: white;
+    font-weight: 700;
+}
+
+.stock {
+    color: #888;
+    letter-spacing: .55px;
+    margin-bottom: 6px;
+    font-weight: 700;
+    text-align: center;
+}
+
+
+
+.centrarBoton {
+    width: 100%;
+    max-width: 330px;
+    margin: auto;
+}

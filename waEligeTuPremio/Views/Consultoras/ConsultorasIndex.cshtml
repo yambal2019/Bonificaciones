@@ -1,0 +1,414 @@
+﻿
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /*css param subir archivo*/
+    .btn-file {
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            cursor: inherit;
+            display: block;
+        }
+
+    .overlay {
+        position: fixed;
+        z-index: 98;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+    }
+
+    .overlayContent {
+        z-index: 99;
+        margin: 250px auto;
+        width: 80px;
+        height: 80px;
+    }
+
+        .overlayContent h2 {
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #ff7810;
+        }
+
+        .overlayContent img {
+            width: 80px;
+            height: 80px;
+        }
+</style>
+
+<div class="panel panel-default">
+    <div class="panel-heading text-center">Consultoras Premiadas</div>
+    <div class="panel-body">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">Universo de Consultoras</div>
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                Seleccione el archivo Excel con el universo de Consultoras.
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span class="btn btn-default btn-file">
+                                    Seleccionar Archivo <input type="file" id="FileUpload2">
+                                </span>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-default" id="btnImportarCNS">Subir Consultoras</button>
+                            </div>
+                            <div class="col-md-2">
+                            </div>
+                            @*<div class="col-md-2">
+                                    <button type="button" class="btn btn-default" id="btnAltaCNS">Alta Consultoras</button>
+                                </div>*@
+
+                        </div>
+
+                        <br />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">Consultoras Ganadoras</div>
+                    <div class="panel-body">
+
+                        @*<div class="row">
+                            <div class="col-md-8">
+                                Para Eliminar las Ganadoras del Plan actual presione el boton Eliminar.
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModalDelete">
+                                    Eliminar CNS
+                                </button>*@
+
+                        <!-- Modal -->
+                        @*<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+                                        <div class="modal-dialog modal-sm" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">Confirmar eliminar Consultoras GANAMAS</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Desea eliminar las Consultoras del GANAMAS actual? <span><b>  </b></span>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                                    <input type="submit" value="Si" class="btn btn-default" style="background-color:white; color:black;" data-dismiss="modal" id="btnEliminar" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>*@
+
+                        @*<hr>*@
+
+                        <div class="row">
+                            <div class="col-md-11">
+                                Seleccione el archivo Excel con la lista de Consultoras Premiadas.
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span class="btn btn-default btn-file">
+                                    Seleccionar Archivo <input type="file" id="FileUpload1">
+                                </span>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-default" id="btnImportar">Subir Ganadoras</button>
+                            </div>
+                            <div class="col-md-2">
+                            </div>
+                            @*<div class="col-md-2">
+                                    <button type="button" class="btn btn-default" id="btnAlta">Alta Ganadoras</button>
+                                </div>*@
+
+
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">Consolidar Archivos</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>Presione el Botón Consolidar para cargar los datos de las Consultoras Ganadoras.</p>
+                                <button type="button" class="btn btn-default" id="btnConsolidar">Consolidar</button>
+                            </div>
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">Alta Ganadoras</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <p>Presione el Botón Alta Ganadoras para cargar los datos de las Consultoras Ganadoras en la base de datos.</p>
+                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModalConfirmacion">Alta Ganadoras</button>
+
+                                <div class="modal fade" id="myModalConfirmacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Confirmar Alta de Ganadoras</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                Tenga en cuenta que se reemplazan los datos de las Ganadoras. Desea continuar.? <span><b>  </b></span>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                                <input type="submit" value="Si" class="btn btn-default" style="background-color:white; color:black;" data-dismiss="modal" id="btnAlta" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalTitulo"></h4>
+            </div>
+            <div class="modal-body">
+                <span id="mensaje"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                @*<button type="button" class="btn btn-primary" id="btnEliminar" data-eliminar="">Eliminar</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="divLoading" class="overlay" style="display:none;" />
+<div class="overlayContent">
+    <h2>Espere...</h2>
+    <img src="../images/ajax-loader.gif" alt="Loading" border="0" />
+    &nbsp;
+</div>
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#btnImportar").click(function () {
+            var fileUpload = $("#FileUpload1").get(0);
+            var files = fileUpload.files;
+
+            var fileData = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
+            }
+            fileData.append('username', 'Manas');
+
+            $("#divLoading").show();
+            $.ajax({
+                url: '../Consultoras/UploadFiles',
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: fileData,
+                success: function (result) {
+
+                    $("#myModal").modal();
+                    $("#myModalTitulo").text('Mensaje');
+                    $("#mensaje").text(result);
+                    $("#divLoading").hide();
+                },
+                error: function (err) {
+                    $("#myModal").modal();
+                    $("#myModalTitulo").text('Mensaje');
+                    $("#mensaje").text(err.statusText);
+                    $("#divLoading").hide();
+                }
+            });
+        });
+
+        $("#btnImportarCNS").click(function () {
+            var fileUpload = $("#FileUpload2").get(0);
+            var files = fileUpload.files;
+
+            var fileData = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
+            }
+            fileData.append('username', 'Manas');
+
+            $("#divLoading").show();
+            $.ajax({
+                url: '../Consultoras/UploadFilesCNS',
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: fileData,
+                success: function (result) {
+
+                    $("#myModal").modal();
+                    $("#myModalTitulo").text('Mensaje');
+                    $("#mensaje").text(result);
+                    $("#divLoading").hide();
+                },
+                error: function (err) {
+                    $("#myModal").modal();
+                    $("#myModalTitulo").text('Mensaje');
+                    $("#mensaje").text(err.statusText);
+                    $("#divLoading").hide();
+                }
+            });
+        });
+
+        $("#btnAlta").click(function () {
+            $("#divLoading").show();
+            $.ajax({
+                url: '../Consultoras/AgregarGanadoras',
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                //data: fileData,
+                success: function (result) {
+                    $("#myModal").modal();
+                    $("#myModalTitulo").text('Mensaje');
+                    $("#mensaje").text(result);
+                    $("#divLoading").hide();
+                },
+                error: function (err) {
+                    $("#divLoading").hide();
+                    $("#myModal").modal();
+                    $("#myModalTitulo").text('Mensaje');
+                    $("#mensaje").text(err.statusText);
+                    //alert(err.statusText);
+                }
+            });
+        });
+
+
+        $("#btnAltaCNS").click(function () {
+            $("#divLoading").show();
+            $.ajax({
+                url: '../Consultoras/AgregarConsultoras',
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                //data: fileData,
+                success: function (result) {
+                    $("#myModal").modal();
+                    $("#myModalTitulo").text('Mensaje');
+                    $("#mensaje").text(result);
+                    $("#divLoading").hide();
+                },
+                error: function (err) {
+                    $("#divLoading").hide();
+                    $("#myModal").modal();
+                    $("#myModalTitulo").text('Mensaje');
+                    $("#mensaje").text(err.statusText);
+                    //alert(err.statusText);
+                }
+            });
+        });
+
+        $("#btnEliminar").click(function () {
+            $("#divLoading").show();
+            $.ajax({
+                url: '../Consultoras/EliminarGanadoras',
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                //data: fileData,
+                success: function (result) {
+                    $("#divLoading").hide();
+                    $("#myModal").modal();
+                    $("#myModalTitulo").text('Mensaje');
+                    $("#mensaje").text(result);
+                },
+                error: function (err) {
+                    $("#divLoading").hide();
+                    $("#myModal").modal();
+                    $("#myModalTitulo").text('Mensaje');
+                    $("#mensaje").text(err.statusText);
+                }
+            });
+        });
+
+
+        $("#btnConsolidar").click(function () {
+            $("#divLoading").show();
+            $.ajax({
+                url: '../Consultoras/AltaConsultoraPremio',
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                //data: fileData,
+                success: function (result) {
+                    $("#divLoading").hide();
+                    $("#myModal").modal();
+                    $("#myModalTitulo").text('Mensaje');
+                    $("#mensaje").text(result);
+                },
+                error: function (err) {
+                    $("#divLoading").hide();
+                    $("#myModal").modal();
+                    $("#myModalTitulo").text('Mensaje');
+                    $("#mensaje").text(err.statusText);
+                }
+            });
+        });
+
+    });
+
+</script>

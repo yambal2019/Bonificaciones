@@ -1,0 +1,79 @@
+﻿@model IEnumerable<waEligeTuPremio.Models.SP_MenuIDPerfil>
+
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading text-center">Lista Menu por Perfil</div>
+    <div class="panel-body">
+        @using (Html.BeginForm("PerfilIndex", "Perfil", FormMethod.Post))
+        {
+            <div class="row">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-3">
+                    @Html.Label("Nombre Perfil", "Nombre Perfil")
+                    @Html.DropDownList("PerfilId", (SelectList)ViewBag.Perfil, new { onchange = "this.form.submit();", @class = "form-control" })
+                </div>
+                <div class="col-md-2">
+                    @*<br />
+                        <button class="btn btn-default" style="vertical-align:middle" value="Buscar" name="Command">
+                            <span class="glyphicon glyphicon-search"></span>
+                            Buscar
+                        </button>*@
+                </div>
+                <div class="col-md-3">
+                </div>
+            </div>
+            <br />
+            <br />
+
+            <div class="table-responsive">
+                <table class="table">
+                    <tr style="background-color:#ff7810;color:white;">
+                        <th>
+                            Nro
+                        </th>
+                        <th>
+                            Menú
+                        </th>
+                        <th>
+                            Posición
+                        </th>
+                        <th>
+                            Activo
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nro)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.nameOption)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.parentId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.bitAcceso)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "Edit", new { id = item.intID }, new { data_modal = "" })
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        }
+    </div>
+</div>
+
+
+

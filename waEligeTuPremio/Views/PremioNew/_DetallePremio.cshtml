@@ -1,0 +1,353 @@
+﻿@model waEligeTuPremio.Models.TBPremioModel
+
+<div id="ListPremio">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <section class="box ">
+            <header class="panel_header">
+                <h2 class="title pull-left">Lista de Premios</h2>
+                <div class="actions panel_actions pull-right">
+                    <i class="box_toggle fa fa-chevron-down"></i>
+                    <i class="box_setting fa fa-cog" data-toggle="modal" href="#section-settings"></i>
+                    <i class="box_close fa fa-times"></i>
+                </div>
+            </header>
+            <div class="content-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <button style="margin-right:10px" class="getNuevo btn btn-primary pull-right">Agregar Premio</button>
+
+                    </div>
+                </div>
+                <!-- INICIO -->
+
+                <div class="containerCuerpo">
+                    <div class=" row box_width modules_product borde">
+                        <div id="product_list" class="slide_box grid">
+                            @if (Model.ListaNivelPremio != null || Model.ListaNivelPremio.Count() != 0)
+                            {
+                                foreach (var x in Model.ListaNivelPremio)
+                                {
+
+                                    var nivel = x.intNivel;
+
+                                    <h3 class="tituloNivel"><span class="inner">Nivel - @x.intNivel</span></h3>
+
+
+                                    <ul id="vm2product" class="feat vmproduct layout">
+                                        <li class="rows  firstItem">
+
+                                            <!--    Premios del nivel  -->
+                                            @foreach (var elemento in Model.ListaPremio)
+                                            {
+
+                                                if (elemento.intNivel == nivel)
+                                                {
+
+                                                    <div class="col-md-3">
+
+                                                        <div class="product-box front_w spacer">
+                                                            <input type="hidden" class="quick_ids" name="virtuemart_product_id" value="5">
+                                                            <div class="browseImage ">
+                                                                <div class="lbl-box2">
+
+                                                                    @if (elemento.bitSeleccionado)
+                                                                    {
+                                                                       
+                                                                        <div class="new">Seleccionado</div>
+
+                                                                    }
+                                                                </div>
+
+                                                                <div class="img-wrapper">
+
+                                                                    <a href="">
+                                                                        <div class="front">
+
+                                                                            @if (elemento.Imagen == null)
+                                                                            {
+
+
+                                                                                <img src="~/images/interrogacion.jpg"
+                                                                                     title="product05.jpg" alt="" class="lazy browseProductImage featuredProductImageFirst"
+                                                                                     id="Img_to_Js_5" style="display: inline-block;background-color:yellow">
+
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                var base64 = Convert.ToBase64String(elemento.Imagen);
+                                                                                var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+
+
+                                                                                <img src=@imgSrc height="250" width="250"
+                                                                                     title="product05.jpg" alt="" class="lazy browseProductImage featuredProductImageFirst"
+                                                                                     id="Img_to_Js_5" style="display: inline-block;">
+
+                                                                            }
+
+
+                                                                        </div>
+
+                                                                    </a>
+                                                                </div>
+                                                                <!-- -->
+
+                                                            </div>
+
+                                                            <div class="slide-hover">
+                                                                <div class="wrapper">
+                                                                    <div class="Title">
+                                                                        <span class="stock-level">@Html.DisplayFor(modelItem => elemento.vchTitulo)</span>
+                                                                    </div>
+
+
+                                                                    <div class="stock">
+                                                                        <span class="stock-level">Cantidad Real : @Html.DisplayFor(modelItem => elemento.smintStockrReal)</span>
+                                                                    </div>
+                                                                    <div class="stock">
+                                                                        <span class="stock-level">Cantidad Inicial : @Html.DisplayFor(modelItem => elemento.smintStock)</span>
+                                                                    </div>
+                                                                    <span style="color: #ff7810;">Descripción :</span>
+
+
+                                                                    <div class="desc1" style="height: 70px;">
+                                                                        <p>
+                                                                            @Html.DisplayFor(modelItem => elemento.vchDescripcion)
+
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="vm-product-price vm3pr-7">
+                                                                        <div class="product-price Price marginbottom12" id="productPrice5">
+                                                                        </div>
+
+                                                                        <div class="clear"></div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="wrapper-slide">
+
+
+                                                                    <div class="call-a-question list" style="height: 40px;">
+
+
+                                                                        <div class="row">
+                                                                            <div class="form-horizontal" style="margin-left: 10px;">
+
+
+                                                                                <label class="btn btn-primary">
+                                                                                    Imagen <input type="file" style="display: none;" id="fuImagen" name=@elemento.intPremio accept=".jpg">
+                                                                                </label>
+                                                                                <button type="button" class="btn btn-default getEditar" data-value="@elemento.intPremio">Editar</button>
+
+
+                                                                                <button type="button" class="btn btn-danger getEliminar" data-value="@elemento.intPremio">Eliminar</button>
+
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+
+
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div style="margin-bottom:25px">
+
+                                                    </div>
+
+                                                }
+
+                                            }
+                                            <div class="clear animate_bot_tabs" style="height:20px">
+
+                                            </div>
+                                            <!--    Fin Elemento Premio  -->
+                                        </li>
+
+
+
+                                    </ul>
+
+
+                                }
+                            }
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- FIN -->
+            </div>
+        </section>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+      
+        $(function () {
+            $(".getNuevo").click(function () {
+
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("PremioNuevoPartial", "PremioNew")',
+                    contentType: "application/json; charset=utf-8",
+                    datatype: "json",
+                    success: function (data) {
+                        $("#myModalTitulo").text('Nuevo Premio');
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal(options);
+                        $('#myModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Content load failed.");
+                    }
+                });
+            });
+            $("#closbtn").click(function () {
+
+                $('#myModal').modal('hide');
+            });
+        });
+
+        
+        $(function () {
+            $(".getEditar").click(function () {
+
+
+                var boton = $(this);
+                var intpremio = $(boton).attr("data-value")
+
+                var empObj = {
+                    intPremio: intpremio
+
+                };
+
+
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "POST",
+                      url: '@Url.Action("PremioEditarPartial", "PremioNew")',
+                    contentType: "application/json; charset=utf-8",
+                    datatype: "json",
+                    data: JSON.stringify(empObj),
+                    success: function (data) {
+                        $("#myModalTitulo").text('Editar Premio');
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal(options);
+                        $('#myModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Content load failed.");
+                    }
+                });
+            });
+            $("#closbtn").click(function () {
+
+                $('#myModal').modal('hide');
+            });
+        });
+
+
+       
+        $(function () {
+            $(".getEliminar").click(function () {
+
+
+                var boton = $(this);
+                var intpremio = $(boton).attr("data-value")
+
+                var empObj = {
+                    intPremio: intpremio
+
+                };
+
+
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "POST",
+
+                    url: '@Url.Action("PremioEliminarPartial", "PremioNew")',
+                    contentType: "application/json; charset=utf-8",
+                    datatype: "json",
+                    data: JSON.stringify(empObj),
+                    success: function (data) {
+                        $("#myModalTitulo").text('Desea Eliminar este Premio?');
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal(options);
+                        $('#myModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Content load failed.");
+                    }
+                });
+            });
+            $("#closbtn").click(function () {
+
+                $('#myModal').modal('hide');
+            });
+        });
+
+
+
+
+        var file
+        var name
+
+        $(document).ready(function () {
+
+
+            $('input[type="file"]').change(function (e) {
+
+
+                name = e.target.name;
+
+                if (name != 'excel') {
+
+                    file = e.target.files[0];
+
+                    var fileData = new FormData();
+                    fileData.append(file.name, file);
+
+                    var intPremio = e.target.name;
+
+                    fileData.append('intPremio', intPremio);
+                    $.ajax({
+                        url: '@Url.Action("UploadImg", "PremioNew")',
+                        type: "POST",
+                        contentType: false, // Not to set any content header
+                        processData: false, // Not to process data
+                        data: fileData,
+                        success: function (result) {
+                            window.location.href = '../PremioNew/Index';
+                          
+
+                        },
+                        error: function (err) {
+                            $("#myModal").modal();
+                            $("#myModalTitulo").text('Mensaje');
+                            $("#mensaje").text(err.statusText);
+
+                        }
+                    });
+
+                    $("#closbtn").click(function () {
+
+                        $('#myModal').modal('hide');
+                    });
+
+                }
+
+            });
+
+        });
+
+
+</script>
+
+

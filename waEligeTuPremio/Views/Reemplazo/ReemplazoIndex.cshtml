@@ -1,0 +1,57 @@
+﻿@model waEligeTuPremio.Models.SP_GetListaPlan
+
+@{
+    /**/
+
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("ReemplazoIndex", "Reemplazo", FormMethod.Post))
+{
+
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">Reemplazo de Premios</div>
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col-md-9">
+                    Descargar el archivo Excel para reemplazar los premios.
+                </div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-3">
+                    @Html.Label("Plan", "Plan")
+                    @*@Html.DropDownList("Plan", (SelectList)ViewBag.Plan, new { @class = "form-control" })*@
+                    @*@Html.DropDownListFor(model => model.Nro, ViewBag.Plan as SelectList, new { @class = "form-control" })*@
+                    @Html.DropDownListFor(model => model.intCodigo, new SelectList(ViewBag.Plan, "Value", "Text", 0), "----------Seleccionar----------", new { @class = "form-control" })
+                </div>
+                <div class="col-md-2">
+                    <br />
+                    <button class="btn btn-default" style="vertical-align:middle" value="Descargar" name="Command">
+                        <span class="glyphicon glyphicon-download-alt"></span>
+                        Descargar
+                    </button>
+                    @*@Html.ActionLink("Descargar Archivo", "DownloadFile", null, new { @style = "color:white;" })*@
+                </div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+
+            <br />
+        </div>
+    </div>
+
+}

@@ -1,0 +1,123 @@
+﻿@model IEnumerable<waEligeTuPremio.Models.SP_GetMensaje>
+
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading text-center">Lista de Mensajes</div>
+    <div class="panel-body">
+
+        @*<div class="row">
+            <div class="col-md-3">
+                @Html.ActionLink("Nuevo Mensaje", "Create", null, new { data_modal = "" })
+            </div>
+            <div class="col-md-9">
+                <h4 class="text-danger">@ViewBag.cantidad</h4>
+            </div>
+        </div>*@
+        <br />
+
+        @using (Html.BeginForm("MensajeIndex", "Mensaje", FormMethod.Post))
+        {
+
+            <div class="table-responsive">
+                <table class="table">
+                    <tr style="background-color:#ff7810;color:white;">
+                        <th>
+                            Tipo
+                        </th>
+                        <th>
+                            Mensaje
+                        </th>
+                        <th>
+                            Activo
+                        </th>
+                        <th>
+                            Fecha
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.vchTipo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.vchMensaje)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BitActivo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.dttmFecha)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Editar", "Edit", new { id = item.intCodigo }, new { data_modal = "" })
+                        </td>
+                    </tr>
+                    }
+
+                </table>
+            </div>
+        }
+
+        @*@if (Model.ElementAt(0).Cantidad > 1 )
+        {
+            <script type="text/javascript">
+
+                window.onload = function () {
+                    DisparaAlert();
+                };
+
+                function DisparaAlert() {
+
+                    $("#myModal").modal();
+                    $("#myModalTitulo").text('Mensaje');
+                    $("#mensaje").text('Solo se Permite un mensaje Activo. Seleccione solo uno.');
+
+                };
+
+            </script>
+        }*@
+
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalTitulo"></h4>
+            </div>
+            <div class="modal-body">
+                <span id="mensaje"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                @*<button type="button" class="btn btn-primary" id="btnEliminar" data-eliminar="">Eliminar</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<script type="text/javascript">
+
+    @{
+        var elemento = Model;
+        @elemento.ElementAt(0).JSFuncion;
+   }
+
+    function DisparaAlert() {
+
+        $("#myModal").modal();
+        $("#myModalTitulo").text('Mensaje');
+        $("#mensaje").text('Solo se Permite un mensaje Activo. Seleccione solo uno.');
+
+    }
+
+</script>*@

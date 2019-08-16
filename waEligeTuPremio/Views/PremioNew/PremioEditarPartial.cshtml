@@ -1,0 +1,112 @@
+﻿@model waEligeTuPremio.Models.TBPremioModel
+
+@using (Html.BeginForm("PremioGuardarPartial", "PremioNew"))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <div class="form-horizontal">
+
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.intOrden)
+            @Html.HiddenFor(model => model.smintStockrReal)
+            @Html.HiddenFor(model => model.intPremio)
+            <div class="form-group">
+                <label class="control-label col-md-2">
+                    Campaña
+                </label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(m => m.SelectedCampañaId, Model.ListaCampaña, "- Seleccione una Campaña -", new { @class = "form-control" })
+                </div>
+
+                <label class="control-label col-md-2"> CodigoSAP </label>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.intCodigoSAP, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.intCodigoSAP, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="control-label col-md-2"> CodigoCorto </label>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.intCodigoCorto, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.intCodigoCorto, "", new { @class = "text-danger" })
+                </div>
+
+                <label class="control-label col-md-2"> Titulo </label>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.vchTitulo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.vchTitulo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+
+
+            <div class="form-group">
+                <label class="control-label col-md-2"> Descripción </label>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.vchDescripcion, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.vchDescripcion, "", new { @class = "text-danger" })
+                </div>
+
+
+            </div>
+
+
+
+
+
+            <div class="form-group">
+                <label class="control-label col-md-2"> Stock </label>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.smintStock, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.smintStock, "", new { @class = "text-danger" })
+                </div>
+
+                <label class="control-label col-md-2"> Puntos </label>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.smintPuntos, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.smintPuntos, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <label class="control-label col-md-2"> Activo </label>
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.bitActivo)
+                        @Html.ValidationMessageFor(model => model.bitActivo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <label class="control-label col-md-2"> Nivel </label>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.intNivel, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.intNivel, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2"> Por Defecto </label>
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.bitInicial)
+                        @Html.ValidationMessageFor(model => model.bitInicial, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="reset" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button id="saveOrder" type="submit" class="btn btn-danger">Guardar</button>
+    </div>
+}
+
+
