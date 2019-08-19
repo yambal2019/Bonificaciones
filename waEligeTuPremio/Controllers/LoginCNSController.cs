@@ -67,29 +67,31 @@ namespace waEligeTuPremio.Controllers
                 objTConsultora.vchNombreCompleto = data.nombreCompleto;
                 objTConsultora.vchEmail = data.email;
 
-                String[] valores = new String[4];
+                //String[] valores = new String[4];
 
-                valores = data.nombreCompleto.Split(' ');
-                string n1, n2, n3, n4;
+                //valores = data.nombreCompleto.Split(' ');
+                //string n1, n2, n3, n4;
 
-                if (valores.Length == 3)
-                {
-                    n1 = valores[0] ?? "";
-                    n2 = "";
-                    n3 = valores[1] ?? "";
-                    n4 = valores[2] ?? "";
-                }
-                else
-                {
-                    n1 = valores[0] ?? "";
-                    n2 = valores[1] ?? "";
-                    n3 = valores[2] ?? "";
-                    n4 = valores[3] ?? "";
-                }
+                //if (valores.Length == 3)
+                //{
+                //    n1 = valores[0] ?? "";
+                //    n2 = "";
+                //    n3 = valores[1] ?? "";
+                //    n4 = valores[2] ?? "";
+                //}
+                //else
+                //{
+                //    n1 = valores[0] ?? "";
+                //    n2 = valores[1] ?? "";
+                //    n3 = valores[2] ?? "";
+                //    n4 = valores[3] ?? "";
+                //}
 
 
-                objTConsultora.vchNombre = n1 + ' ' + n2;
-                objTConsultora.vchApellido = n3 + ' ' + n4;
+                //objTConsultora.vchNombre = n1 + ' ' + n2;
+                //objTConsultora.vchApellido = n3 + ' ' + n4;
+                objTConsultora.vchNombre = "";
+                objTConsultora.vchApellido = "";
 
                 DAOConsultora.InsertConsultoraNueva(objTConsultora);
 
