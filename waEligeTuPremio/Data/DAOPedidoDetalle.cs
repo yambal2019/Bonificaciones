@@ -21,10 +21,11 @@ namespace waEligeTuPremio.Data
             SqlCommand command = new SqlCommand();
             command.CommandText = "TBIngresaDetalle";
             command.CommandType = CommandType.StoredProcedure;
-            SqlConnection objConnection = new SqlConnection(StaticConnectionString);
-            command.Connection = objConnection;
+         
+            SqlConnection staticConnection = StaticSqlConnection;
+            command.Connection = staticConnection;
 
-            objConnection.Open();
+            staticConnection.Open();
             try
             {
 
@@ -50,6 +51,7 @@ namespace waEligeTuPremio.Data
             }
             finally
             {
+                staticConnection.Close();
                 command.Dispose();
             }
 

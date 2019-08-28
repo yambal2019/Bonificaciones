@@ -13,7 +13,7 @@ namespace waEligeTuPremio.Controllers.Pedido
 {
     public class PedidoNewController : Controller
     {
-        [OutputCache(Duration = 0, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
+        
         public ActionResult Inicio()
         {
             TBPremioModel obj = new TBPremioModel();
