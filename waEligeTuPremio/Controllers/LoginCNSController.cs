@@ -102,7 +102,7 @@ namespace waEligeTuPremio.Controllers
                 if (m == null)
                 {
                     
-                    return Json("Datos incorrectos. " + usr + " Usuario no habilitado para la sección ELIGE TU PREMIO.");
+                    return Json("Datos incorrectos. " + usr + " Usuario no habilitado para la sección ELIGE TU BONIFICACION.");
                 }
 
 
