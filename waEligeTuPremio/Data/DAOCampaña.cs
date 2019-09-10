@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using waEligeTuPremio.Models;
 
 namespace waEligeTuPremio.Data
@@ -13,6 +14,57 @@ namespace waEligeTuPremio.Data
         public DAOCampaña()
         {
 
+        }
+
+        public static DataTable MyMethod(string Query)
+        {
+            DataSet  ds = new DataSet();
+            DataTable dt = new DataTable();
+            SqlDataAdapter da = new SqlDataAdapter(Query, StaticSqlConnection);
+
+            da.Fill(dt);
+            List<SelectListItem> list = new List<SelectListItem>();
+            StaticSqlConnection.Close();
+            return dt;
+
+        }
+
+        public static List<SelectListItem> ListaAñios()
+        {
+            string countrystring = "Select DISTINCT t.smintAnio FROM TBCampaña t ORDER BY 1 DESC";
+            DataSet ds = new DataSet();
+            List<string> li = new List<string>();
+            DataTable dt = new DataTable();
+              dt = MyMethod(countrystring);
+            List<SelectListItem> list = new List<SelectListItem>();
+
+            foreach (DataRow row in dt.Rows)
+            {
+
+                list.Add(new SelectListItem { Text = Convert.ToString(row.ItemArray[0]), Value = Convert.ToString(row.ItemArray[0]) });
+
+            }
+
+            return list;
+        }
+
+        public static List<SelectListItem> ListaCampañasPorAño(string AniosId)
+        {
+            string countrystring = "SELECT t.intCampaña ,t.vchDescripcion  FROM TBCampaña t WHERE   t.bitEstado=1 AND t.smintAnio ='" + AniosId + "'";
+
+
+            DataTable dt = new DataTable();
+            dt = MyMethod(countrystring);
+            List<SelectListItem> list = new List<SelectListItem>();
+            list.Add(new SelectListItem { Text = "--Seleccione una campaña--", Value = "0" });
+            foreach (DataRow row in dt.Rows)
+            {
+
+                list.Add(new SelectListItem { Text = Convert.ToString(row.ItemArray[1]), Value = Convert.ToString(row.ItemArray[0]) });
+
+            }
+
+            return list;
         }
 
 

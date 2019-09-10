@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -15,18 +16,54 @@ namespace waEligeTuPremio.Controllers.Procesos
     public class PremioNewController : Controller
     {
 
+        private IEnumerable<Añio> GetAllAnios()
+        {
+            Int32 valor = Convert.ToInt32( ConfigurationManager.AppSettings["AñoFinal"]);
+
+            List<Añio> objLista = new List<Añio>();
+
+
+            for (int i = 2018; i <= valor; i++)
+            {
+                //ListaItems(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                Añio obj = new Añio();
+                obj.id = i.ToString();
+                obj.Anio = i.ToString();
+                objLista.Add(obj);
+            }
+
+         
+            return objLista;
+        }
+
+
         public ActionResult Index()
         {
-
-            TBPremioModel obj = new TBPremioModel();
-            List<TBCampañaModel> ListaCampaña = DAOCampaña.SelectAll();
-
-            obj.ListaCampaña = new SelectList(ListaCampaña, "intCampaña", "vchDescripcion");
-            obj.ListaNivelPremio = new List<NivelPremio>();
-            obj.ListaPremio = new List<TBPremioModel>();
+            TBPremioModel obj = NewMethod();
 
             return View(obj);
         }
+
+        private static TBPremioModel NewMethod()
+        {
+            TBPremioModel obj = new TBPremioModel();
+            List<SelectListItem> ListaCampaña = new List<SelectListItem>();
+            ListaCampaña.Add(new SelectListItem { Text = "--Seleccione una campaña--", Value = "0" });
+            obj.ListaCampaña = new SelectList(ListaCampaña, "Value", "Text");
+            obj.ListaNivelPremio = new List<NivelPremio>();
+            obj.ListaPremio = new List<TBPremioModel>();
+            obj.ListaAnios = new SelectList(DAOCampaña.ListaAñios(), "Value", "Text");
+            return obj;
+        }
+
+        public JsonResult GetCampaña(string AniosId)
+        {
+           
+            return Json(new SelectList(DAOCampaña.ListaCampañasPorAño(AniosId), "Value", "Text", JsonRequestBehavior.AllowGet));
+
+
+        }
+
 
         public ActionResult Busqueda(Int32 SelectedCampañaId)
         {
@@ -98,22 +135,22 @@ namespace waEligeTuPremio.Controllers.Procesos
                     //}
                 }
             }
-            TBPremioModel obj = new TBPremioModel();
+            //TBPremioModel obj = new TBPremioModel();
+            ////List<TBCampañaModel> ListaCampaña = DAOCampaña.SelectAll();
+
+            ////obj.ListaCampaña = new SelectList(ListaCampaña, "intCampaña", "vchDescripcion");
+
+            ////return View("Index", obj);
+            ////TBPremioModel obj = new TBPremioModel();
+            //////DAOPremio.PremioEliminar(model.intPremio);
+            //// obj.ListaNivelPremio = DAOPremio.ListaNivelPorCampaña(SelectedCampañaId);
+
+            ////TBPremioModel obj = new TBPremioModel();
+
             //List<TBCampañaModel> ListaCampaña = DAOCampaña.SelectAll();
-
             //obj.ListaCampaña = new SelectList(ListaCampaña, "intCampaña", "vchDescripcion");
-
-            //return View("Index", obj);
-            //TBPremioModel obj = new TBPremioModel();
-            ////DAOPremio.PremioEliminar(model.intPremio);
-            // obj.ListaNivelPremio = DAOPremio.ListaNivelPorCampaña(SelectedCampañaId);
-
-            //TBPremioModel obj = new TBPremioModel();
-
-            List<TBCampañaModel> ListaCampaña = DAOCampaña.SelectAll();
-            obj.ListaCampaña = new SelectList(ListaCampaña, "intCampaña", "vchDescripcion");
-
-           // return RedirectToAction("Index", "PremioNew");
+            TBPremioModel obj = NewMethod();
+            // return RedirectToAction("Index", "PremioNew");
             return View("Index",obj);
           //  return View();
         }

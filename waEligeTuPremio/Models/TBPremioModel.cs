@@ -44,7 +44,8 @@ namespace waEligeTuPremio.Models
 
         public int SelectedCampañaId { get; set; }
         public SelectList ListaCampaña { get; set; }
-
+        public int AniosId { get; set; }
+        public SelectList ListaAnios { get; set; }
         public List<TBPremioModel> ListaPremio { get; set; }
 
     }
@@ -55,6 +56,10 @@ namespace waEligeTuPremio.Models
         public int cantidadNivel { get; set; }
     }
 
-
+    public class Añio
+    {
+        public String id { get; set; }
+        public String Anio { get; set; }
+    }
 
 }

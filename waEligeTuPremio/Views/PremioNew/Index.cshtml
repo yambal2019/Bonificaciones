@@ -109,26 +109,47 @@
                 </div>
             </header>
             <div class="content-body">
-                <div class="row">
 
-                    <form method="get" action="@Url.Action("Busqueda")" data-otf-ajax="true" data-otf-target="#ListPremio">
-                        <div class="col-md-6 col-sm-6 col-xs-12">
+
+                <form method="get" action="@Url.Action("Busqueda")" data-otf-ajax="true" data-otf-target="#ListPremio">
+
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 col-xs-12">
 
                             <div class="form-group has-help">
-                                <label class="form-label" for="field-13">Seleccione la Campaña</label>
-                                @Html.DropDownListFor(m => m.SelectedCampañaId, Model.ListaCampaña, "- Seleccione una Campaña -", new { @class = "form-control" })
+                                <label class="form-label" for="field-13">Año</label>
+                                @Html.DropDownListFor(m => m.AniosId, Model.ListaAnios, "- Seleccione un Año -", new { @class = "form-control" })
                                 <br>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-success submit">Buscar Premio</button>
-
                             </div>
 
                         </div>
-                    </form>
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+
+                            <div class="form-group has-help">
+                                <label class="form-label" for="field-13">Campaña</label>
+                                @Html.DropDownListFor(m => m.SelectedCampañaId, Model.ListaCampaña, new { @class = "form-control" })
+                                @*<select class="form-control" id="SelectedCampañaId"></select>*@
+                                <br>
+                            </div>
 
 
-                </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+
+
+                            <div class="form-group">
+                                @*<button type="button" id="enviar" class="btn btn-success submit">Buscar Premio</button>*@
+                                <button type="submit" id="enviar" class="btn btn-success submit">Buscar Premio</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+
+
+
             </div>
         </section>
     </div>
@@ -149,6 +170,38 @@
     </div>
 
 
+    <script type="text/javascript">
 
+
+    $(document).ready(function () {
+
+        $("#AniosId").change(function () {
+            console.log("cambio");
+            console.log($("#AniosId").val());
+
+            $("#SelectedCampa_aId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetCampaña")',
+                dataType: 'json',
+                data: { AniosId: $("#AniosId").val() },
+                success: function (states) {
+                    $.each(states, function (i, state) {
+                        $("#SelectedCampa_aId").append('<option value="' + state.Value + '">' +
+                             state.Text + '</option>');
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve country states.' + ex);
+                }
+            });
+
+        })
+
+          
+    });
+
+    </script>
 </div>
 

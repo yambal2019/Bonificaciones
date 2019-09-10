@@ -33,8 +33,8 @@ namespace waEligeTuPremio.Controllers
                     Datos data = ws.getUsuario("1", user.Usuario, user.Contrasena).detalle.respuesta.datos;
 
                     //Todo:
-                    //user.Usuario = "dgaza";
-                    //data.flagValidacion = "1";
+                    user.Usuario = "dgaza";
+                    data.flagValidacion = "1";
 
                     string login = "";
                     if (data.flagValidacion == "0")
