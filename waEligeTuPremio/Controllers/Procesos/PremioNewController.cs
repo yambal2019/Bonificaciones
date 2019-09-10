@@ -39,12 +39,12 @@ namespace waEligeTuPremio.Controllers.Procesos
 
         public ActionResult Index()
         {
-            TBPremioModel obj = NewMethod();
+            TBPremioModel obj = CargaDatosInicial();
 
             return View(obj);
         }
 
-        private static TBPremioModel NewMethod()
+        private static TBPremioModel CargaDatosInicial()
         {
             TBPremioModel obj = new TBPremioModel();
             List<SelectListItem> ListaCampaña = new List<SelectListItem>();
@@ -120,49 +120,20 @@ namespace waEligeTuPremio.Controllers.Procesos
 
                         DAOImage.Update(objImage);
 
-
-                        //            return Json("Status de Importacion: Se subio correctamente la imagen.");
-                        //        }
-                        //        else
-                        //        {
-                        //            return Json("Tipo incorrecto de Archivo.");
-                        //        }
                     };
-                    //}
-                    //catch (Exception ex)
-                    //{
-                    //    return Json("Error occurred. Error details: " + ex.Message);
-                    //}
+                    
                 }
             }
-            //TBPremioModel obj = new TBPremioModel();
-            ////List<TBCampañaModel> ListaCampaña = DAOCampaña.SelectAll();
-
-            ////obj.ListaCampaña = new SelectList(ListaCampaña, "intCampaña", "vchDescripcion");
-
-            ////return View("Index", obj);
-            ////TBPremioModel obj = new TBPremioModel();
-            //////DAOPremio.PremioEliminar(model.intPremio);
-            //// obj.ListaNivelPremio = DAOPremio.ListaNivelPorCampaña(SelectedCampañaId);
-
-            ////TBPremioModel obj = new TBPremioModel();
-
-            //List<TBCampañaModel> ListaCampaña = DAOCampaña.SelectAll();
-            //obj.ListaCampaña = new SelectList(ListaCampaña, "intCampaña", "vchDescripcion");
-            TBPremioModel obj = NewMethod();
-            // return RedirectToAction("Index", "PremioNew");
+         
+            TBPremioModel obj = CargaDatosInicial();
             return View("Index",obj);
-          //  return View();
+     
         }
 
         [HttpPost]
         public ActionResult PremioNuevoPartial()
         {
-            TBPremioModel obj = new TBPremioModel();
-
-            List<TBCampañaModel> ListaCampaña = DAOCampaña.SelectAll();
-            obj.ListaCampaña = new SelectList(ListaCampaña, "intCampaña", "vchDescripcion");
-
+            TBPremioModel obj = CargaDatosInicial();
             return PartialView("PremioNuevoPartial", obj);
         }
 
@@ -171,19 +142,12 @@ namespace waEligeTuPremio.Controllers.Procesos
         public ActionResult PremioGuardarPartial(TBPremioModel model)
         {
 
-            TBPremioModel obj = new TBPremioModel();
-            List<TBCampañaModel> ListaCampaña = DAOCampaña.SelectAll();
-
-            obj.ListaCampaña = new SelectList(ListaCampaña, "intCampaña", "vchDescripcion");
-        
-
-
             try
             {
                
                 if (model.intPremio > 0)
                 {
-                    model.intCampaña = model.SelectedCampañaId;
+                    model.intCampaña = model.SelectedCampañaNuevoEditarId;
                     DAOPremio.Update(model);
                 }
                 
@@ -210,11 +174,14 @@ namespace waEligeTuPremio.Controllers.Procesos
         {
             TBPremioModel obj = new TBPremioModel();
             obj = DAOPremio.PremioPorIdPremio(intPremio);
-            //obj.ListaNivelPremio = DAOPremio.ListaNivelPorCampaña(SelectedCampañaId);
 
-            List<TBCampañaModel> ListaCampaña = DAOCampaña.SelectAll();
-            obj.ListaCampaña = new SelectList(ListaCampaña, "intCampaña", "vchDescripcion");
-            obj.SelectedCampañaId = Convert.ToInt32(obj.intCampaña);
+
+            obj.ListaAnios = new SelectList(DAOCampaña.ListaAñios(), "Value", "Text");
+            obj.AniosNuevoEditarId = Convert.ToInt32(obj.AniosNuevoEditarId);
+
+
+            obj.ListaCampaña = new SelectList(DAOCampaña.ListaCampañasPorAño(obj.AniosNuevoEditarId.ToString()), "Value", "Text");
+            obj.SelectedCampañaNuevoEditarId = Convert.ToInt32(obj.intCampaña);
 
 
             return PartialView("PremioEditarPartial", obj);
@@ -228,12 +195,13 @@ namespace waEligeTuPremio.Controllers.Procesos
         {
             TBPremioModel obj = new TBPremioModel();
             obj = DAOPremio.PremioPorIdPremio(intPremio);
-            //obj.ListaNivelPremio = DAOPremio.ListaNivelPorCampaña(SelectedCampañaId);
 
-            List<TBCampañaModel> ListaCampaña = DAOCampaña.SelectAll();
-            obj.ListaCampaña = new SelectList(ListaCampaña, "intCampaña", "vchDescripcion");
-            obj.SelectedCampañaId = Convert.ToInt32(obj.intCampaña);
+            obj.ListaAnios = new SelectList(DAOCampaña.ListaAñios(), "Value", "Text");
+            obj.AniosNuevoEditarId = Convert.ToInt32(obj.AniosNuevoEditarId);
 
+
+            obj.ListaCampaña = new SelectList(DAOCampaña.ListaCampañasPorAño(obj.AniosNuevoEditarId.ToString()), "Value", "Text");
+            obj.SelectedCampañaNuevoEditarId = Convert.ToInt32(obj.intCampaña);
 
             return PartialView("PremioEliminarPartial", obj);
 
@@ -244,16 +212,6 @@ namespace waEligeTuPremio.Controllers.Procesos
         {
             TBPremioModel obj = new TBPremioModel();
             DAOPremio.PremioEliminar(model.intPremio);
-            //obj.ListaNivelPremio = DAOPremio.ListaNivelPorCampaña(SelectedCampañaId);
-
-            List<TBCampañaModel> ListaCampaña = DAOCampaña.SelectAll();
-            obj.ListaCampaña = new SelectList(ListaCampaña, "intCampaña", "vchDescripcion");
-            //obj.SelectedCampañaId = Convert.ToInt32(obj.intCampaña);
-
-
-            //return PartialView("PremioEliminarPartial", obj);
-
-            //return View("Index",);
             return RedirectToAction("Index", "PremioNew");
         }
     }

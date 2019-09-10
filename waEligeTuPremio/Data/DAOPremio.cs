@@ -198,7 +198,7 @@ namespace waEligeTuPremio.Data
                 command.Parameters.AddWithValue("@intUsr", 1);
                 command.Parameters.AddWithValue("@intNivel", model.intNivel);
                 command.Parameters.AddWithValue("@bitInicial", model.bitInicial);
-                command.Parameters.AddWithValue("@intCampaña", model.SelectedCampañaId);
+                command.Parameters.AddWithValue("@intCampaña", model.SelectedCampañaNuevoEditarId);
                
                 command.ExecuteNonQuery();
 
@@ -320,6 +320,7 @@ namespace waEligeTuPremio.Data
             else
                 objTBPremio.intCampaña = null;
 
+            objTBPremio.AniosNuevoEditarId =Convert.ToInt32( dr["smintAnio"]);
 
             return objTBPremio;
         }

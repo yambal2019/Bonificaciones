@@ -9,6 +9,22 @@
 
             <dl class="dl-horizontal">
                 <dt>
+                    Año
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.AniosNuevoEditarId)
+                </dd>
+
+                <dt>
+                    Campaña
+                </dt>
+
+                <dd>
+                    @Html.DropDownListFor(m => m.SelectedCampañaNuevoEditarId, Model.ListaCampaña, new { @class = "form-control", @disabled = "disabled" })
+                </dd>
+
+                <dt>
                     Premio
                 </dt>
 

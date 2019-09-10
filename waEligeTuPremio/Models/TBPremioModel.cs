@@ -43,8 +43,10 @@ namespace waEligeTuPremio.Models
         public Int32 intPedidoDetalle { get; set; }
 
         public int SelectedCampañaId { get; set; }
+        public int SelectedCampañaNuevoEditarId { get; set; }
         public SelectList ListaCampaña { get; set; }
         public int AniosId { get; set; }
+        public int AniosNuevoEditarId { get; set; }
         public SelectList ListaAnios { get; set; }
         public List<TBPremioModel> ListaPremio { get; set; }
 

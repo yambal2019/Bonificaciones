@@ -11,12 +11,22 @@
             @Html.HiddenFor(model => model.intOrden)
             @Html.HiddenFor(model => model.smintStockrReal)
             @Html.HiddenFor(model => model.intPremio)
+
+            <div class="form-group">
+                <label class="control-label col-md-2">
+                    Año
+                </label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(m => m.AniosNuevoEditarId, Model.ListaAnios, "- Seleccione un Año -", new { @class = "form-control" })
+                </div>
+
+            </div>
             <div class="form-group">
                 <label class="control-label col-md-2">
                     Campaña
                 </label>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(m => m.SelectedCampañaId, Model.ListaCampaña, "- Seleccione una Campaña -", new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.SelectedCampañaNuevoEditarId, Model.ListaCampaña, new { @class = "form-control" })
                 </div>
 
                 <label class="control-label col-md-2"> CodigoSAP </label>
@@ -41,11 +51,6 @@
                     @Html.ValidationMessageFor(model => model.vchTitulo, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-
-
-
-
             <div class="form-group">
                 <label class="control-label col-md-2"> Descripción </label>
                 <div class="col-md-10">
@@ -55,11 +60,6 @@
 
 
             </div>
-
-
-
-
-
             <div class="form-group">
                 <label class="control-label col-md-2"> Stock </label>
                 <div class="col-md-4">
@@ -107,6 +107,41 @@
         <button type="reset" class="btn btn-default" data-dismiss="modal">Cancelar</button>
         <button id="saveOrder" type="submit" class="btn btn-danger">Guardar</button>
     </div>
+
+    <script type="text/javascript">
+
+
+    $(document).ready(function () {
+
+        $("#AniosNuevoEditarId").change(function () {
+            cambio();
+        })
+    });
+
+        function cambio() {
+            console.log("cambio");
+            console.log($("#AniosNuevoEditarId").val());
+
+            $("#SelectedCampa_aNuevoEditarId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetCampaña")',
+                dataType: 'json',
+                data: { AniosId: $("#AniosNuevoEditarId").val() },
+                success: function (states) {
+                    $.each(states, function (i, state) {
+                        $("#SelectedCampa_aNuevoEditarId").append('<option value="' + state.Value + '">' +
+                             state.Text + '</option>');
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve country states.' + ex);
+                }
+            });
+        }
+
+    </script>
 }
 
 
