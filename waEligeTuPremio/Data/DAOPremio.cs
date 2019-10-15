@@ -133,7 +133,7 @@ namespace waEligeTuPremio.Data
 
 
 
-        public static void Update(TBPremioModel model)
+        public static void Update(ref TBPremioModel model)
         {
             SqlCommand command = new SqlCommand();
             command.CommandText = "TBPremio_Update";
@@ -161,7 +161,18 @@ namespace waEligeTuPremio.Data
                 command.Parameters.AddWithValue("@bitInicial", model.bitInicial);
                 command.Parameters.AddWithValue("@intCampaña", model.intCampaña);
 
+                SqlParameter ParmError = new SqlParameter("@Error", SqlDbType.NVarChar, 50);
+                ParmError.Direction = ParameterDirection.Output;
+                command.Parameters.Add(ParmError);
+
+
                 command.ExecuteNonQuery();
+
+                if (!Convert.IsDBNull(command.Parameters["@Error"].Value))
+                {
+                    model.Error = command.Parameters["@Error"].Value.ToString();
+                }
+               
 
             }
             catch (Exception ex)

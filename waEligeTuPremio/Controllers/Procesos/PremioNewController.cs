@@ -16,31 +16,17 @@ namespace waEligeTuPremio.Controllers.Procesos
     public class PremioNewController : Controller
     {
 
-        private IEnumerable<Añio> GetAllAnios()
-        {
-            Int32 valor = Convert.ToInt32( ConfigurationManager.AppSettings["AñoFinal"]);
-
-            List<Añio> objLista = new List<Añio>();
-
-
-            for (int i = 2018; i <= valor; i++)
-            {
-                //ListaItems(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
-                Añio obj = new Añio();
-                obj.id = i.ToString();
-                obj.Anio = i.ToString();
-                objLista.Add(obj);
-            }
-
-         
-            return objLista;
-        }
-
-
+      
+        [HttpGet]
         public ActionResult Index()
         {
             TBPremioModel obj = CargaDatosInicial();
 
+            if (TempData["Error"]!= null)
+            {
+                ViewBag.MensajeError = TempData["Error"].ToString();
+            }
+            
             return View(obj);
         }
 
@@ -58,28 +44,30 @@ namespace waEligeTuPremio.Controllers.Procesos
 
         public JsonResult GetCampaña(string AniosId)
         {
-           
+        
             return Json(new SelectList(DAOCampaña.ListaCampañasPorAño(AniosId), "Value", "Text", JsonRequestBehavior.AllowGet));
-
 
         }
 
 
-        public ActionResult Busqueda(Int32 SelectedCampañaId)
+        public ActionResult Busqueda(TBPremioModel objModel)
         {
             TBPremioModel obj = new TBPremioModel();
-            obj.ListaPremio = DAOPremio.ListaPremioPorCampaña(SelectedCampañaId);
-            obj.ListaNivelPremio = DAOPremio.ListaNivelPorCampaña(SelectedCampañaId);
+
+            obj.ListaPremio = DAOPremio.ListaPremioPorCampaña(objModel.SelectedCampañaId);
+            obj.ListaNivelPremio = DAOPremio.ListaNivelPorCampaña(objModel.SelectedCampañaId);
 
             List<TBCampañaModel> ListaCampaña = DAOCampaña.SelectAll();
             obj.ListaCampaña = new SelectList(ListaCampaña, "intCampaña", "vchDescripcion");
-            obj.SelectedCampañaId = SelectedCampañaId;
+            obj.SelectedCampañaId = objModel.SelectedCampañaId;
 
 
             if (Request.IsAjaxRequest())
             {
                 return PartialView("_DetallePremio", obj);
             }
+
+
             return View("Index", obj);
         }
 
@@ -111,6 +99,7 @@ namespace waEligeTuPremio.Controllers.Procesos
 
 
                         string intPremio = Request.Form["intPremio"].ToString();
+                        Int32 SelectedCampañaId = Convert.ToInt32( Request.Form["intCampana"]);
 
                         TBImage objImage = new TBImage();
                         objImage.vchNombre = archivo.FileName.ToString();
@@ -119,6 +108,7 @@ namespace waEligeTuPremio.Controllers.Procesos
                         objImage.vchExtencion = Path.GetExtension(archivo.FileName);
 
                         DAOImage.Update(objImage);
+
 
                     };
                     
@@ -139,7 +129,7 @@ namespace waEligeTuPremio.Controllers.Procesos
 
 
         [HttpPost]
-        public ActionResult PremioGuardarPartial(TBPremioModel model)
+        public ActionResult PremioGuardarPartial( TBPremioModel model)
         {
 
             try
@@ -148,7 +138,14 @@ namespace waEligeTuPremio.Controllers.Procesos
                 if (model.intPremio > 0)
                 {
                     model.intCampaña = model.SelectedCampañaNuevoEditarId;
-                    DAOPremio.Update(model);
+                    DAOPremio.Update(ref model);
+
+                    if (model.Error!= null)
+                    {
+                        TempData["Error"] = model.Error;
+
+                    }
+                    
                 }
                 
                 else

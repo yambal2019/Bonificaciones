@@ -18,165 +18,175 @@
 
                     </div>
                 </div>
+              
+
                 <!-- INICIO -->
 
                 <div class="containerCuerpo">
                     <div class=" row box_width modules_product borde">
                         <div id="product_list" class="slide_box grid">
-                            @if (Model.ListaNivelPremio != null || Model.ListaNivelPremio.Count() != 0)
+                            @if (Model.SelectedCampañaId != 0)
                             {
-                                foreach (var x in Model.ListaNivelPremio)
+
+                                if (Model.ListaNivelPremio != null && Model.ListaNivelPremio.Count() != 0)
                                 {
+                                    foreach (var x in Model.ListaNivelPremio)
+                                    {
 
-                                    var nivel = x.intNivel;
+                                        var nivel = x.intNivel;
 
-                                    <h3 class="tituloNivel"><span class="inner">Nivel - @x.intNivel</span></h3>
+                                        <h3 class="tituloNivel"><span class="inner">Nivel - @x.intNivel</span></h3>
 
 
-                                    <ul id="vm2product" class="feat vmproduct layout">
-                                        <li class="rows  firstItem">
+                                        <ul id="vm2product" class="feat vmproduct layout">
+                                            <li class="rows  firstItem">
 
-                                            <!--    Premios del nivel  -->
-                                            @foreach (var elemento in Model.ListaPremio)
-                                            {
-
-                                                if (elemento.intNivel == nivel)
+                                                <!--    Premios del nivel  -->
+                                                @foreach (var elemento in Model.ListaPremio)
                                                 {
 
-                                                    <div class="col-md-3">
+                                                    if (elemento.intNivel == nivel)
+                                                    {
 
-                                                        <div class="product-box front_w spacer">
-                                                            <input type="hidden" class="quick_ids" name="virtuemart_product_id" value="5">
-                                                            <div class="browseImage ">
-                                                                <div class="lbl-box2">
+                                                        <div class="col-md-3">
 
-                                                                    @if (elemento.bitSeleccionado)
-                                                                    {
-                                                                       
-                                                                        <div class="new">Seleccionado</div>
+                                                            <div class="product-box front_w spacer">
+                                                                <input type="hidden" class="quick_ids" name="virtuemart_product_id" value="5">
+                                                                <div class="browseImage ">
+                                                                    <div class="lbl-box2">
 
-                                                                    }
-                                                                </div>
+                                                                        @if (elemento.bitSeleccionado)
+                                                                        {
 
-                                                                <div class="img-wrapper">
+                                                                            <div class="new">Seleccionado</div>
 
-                                                                    <a href="">
-                                                                        <div class="front">
-
-                                                                            @if (elemento.Imagen == null)
-                                                                            {
-
-
-                                                                                <img src="~/images/interrogacion.jpg"
-                                                                                     title="product05.jpg" alt="" class="lazy browseProductImage featuredProductImageFirst"
-                                                                                     id="Img_to_Js_5" style="display: inline-block;background-color:yellow">
-
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                var base64 = Convert.ToBase64String(elemento.Imagen);
-                                                                                var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
-
-
-                                                                                <img src=@imgSrc height="250" width="250"
-                                                                                     title="product05.jpg" alt="" class="lazy browseProductImage featuredProductImageFirst"
-                                                                                     id="Img_to_Js_5" style="display: inline-block;">
-
-                                                                            }
-
-
-                                                                        </div>
-
-                                                                    </a>
-                                                                </div>
-                                                                <!-- -->
-
-                                                            </div>
-
-                                                            <div class="slide-hover">
-                                                                <div class="wrapper">
-                                                                    <div class="Title">
-                                                                        <span class="stock-level">@Html.DisplayFor(modelItem => elemento.vchTitulo)</span>
+                                                                        }
                                                                     </div>
 
+                                                                    <div class="img-wrapper">
 
-                                                                    <div class="stock">
-                                                                        <span class="stock-level">Cantidad Real : @Html.DisplayFor(modelItem => elemento.smintStockrReal)</span>
-                                                                    </div>
-                                                                    <div class="stock">
-                                                                        <span class="stock-level">Cantidad Inicial : @Html.DisplayFor(modelItem => elemento.smintStock)</span>
-                                                                    </div>
-                                                                    <span style="color: #ff7810;">Descripción :</span>
+                                                                        <a href="">
+                                                                            <div class="front">
 
-
-                                                                    <div class="desc1" style="height: 70px;">
-                                                                        <p>
-                                                                            @Html.DisplayFor(modelItem => elemento.vchDescripcion)
-
-                                                                        </p>
-                                                                    </div>
-                                                                    <div class="vm-product-price vm3pr-7">
-                                                                        <div class="product-price Price marginbottom12" id="productPrice5">
-                                                                        </div>
-
-                                                                        <div class="clear"></div>
-                                                                    </div>
-
-                                                                </div>
-                                                                <div class="wrapper-slide">
+                                                                                @if (elemento.Imagen == null)
+                                                                                {
 
 
-                                                                    <div class="call-a-question list" style="height: 40px;">
+                                                                                    <img src="~/images/interrogacion.jpg"
+                                                                                         title="product05.jpg" alt="" class="lazy browseProductImage featuredProductImageFirst"
+                                                                                         id="Img_to_Js_5" style="display: inline-block;background-color:yellow">
+
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    var base64 = Convert.ToBase64String(elemento.Imagen);
+                                                                                    var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
 
 
-                                                                        <div class="row">
-                                                                            <div class="form-horizontal" style="margin-left: 10px;">
+                                                                                    <img src=@imgSrc height="250" width="250"
+                                                                                         title="product05.jpg" alt="" class="lazy browseProductImage featuredProductImageFirst"
+                                                                                         id="Img_to_Js_5" style="display: inline-block;">
 
-
-                                                                                <label class="btn btn-primary">
-                                                                                    Imagen <input type="file" style="display: none;" id="fuImagen" name=@elemento.intPremio accept=".jpg">
-                                                                                </label>
-                                                                                <button type="button" class="btn btn-default getEditar" data-value="@elemento.intPremio">Editar</button>
-
-
-                                                                                <button type="button" class="btn btn-danger getEliminar" data-value="@elemento.intPremio">Eliminar</button>
+                                                                                }
 
 
                                                                             </div>
-                                                                        </div>
+
+                                                                        </a>
                                                                     </div>
-
-
+                                                                    <!-- -->
 
                                                                 </div>
-                                                            </div>
 
+                                                                <div class="slide-hover">
+                                                                    <div class="wrapper">
+                                                                        <div class="Title">
+                                                                            <span class="stock-level">@Html.DisplayFor(modelItem => elemento.vchTitulo)</span>
+                                                                        </div>
+
+
+                                                                        <div class="stock">
+                                                                            <span class="stock-level">Cantidad Real : @Html.DisplayFor(modelItem => elemento.smintStockrReal)</span>
+                                                                        </div>
+                                                                        <div class="stock">
+                                                                            <span class="stock-level">Cantidad Inicial : @Html.DisplayFor(modelItem => elemento.smintStock)</span>
+                                                                        </div>
+                                                                        <span style="color: #ff7810;">Descripción :</span>
+
+
+                                                                        <div class="desc1" style="height: 70px;">
+                                                                            <p>
+                                                                                @Html.DisplayFor(modelItem => elemento.vchDescripcion)
+
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="vm-product-price vm3pr-7">
+                                                                            <div class="product-price Price marginbottom12" id="productPrice5">
+                                                                            </div>
+
+                                                                            <div class="clear"></div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="wrapper-slide">
+
+
+                                                                        <div class="call-a-question list" style="height: 40px;">
+
+
+                                                                            <div class="row">
+                                                                                <div class="form-horizontal" style="margin-left: 10px;">
+
+
+                                                                                    <label class="btn btn-primary">
+                                                                                        Imagen <input type="file" style="display: none;" id="fuImagen" name=@elemento.intPremio accept=".jpg">
+                                                                                    </label>
+                                                                                    <button type="button" class="btn btn-default getEditar" data-value="@elemento.intPremio">Editar</button>
+
+
+                                                                                    <button type="button" class="btn btn-danger getEliminar" data-value="@elemento.intPremio">Eliminar</button>
+
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div style="margin-bottom:25px">
 
                                                         </div>
-                                                    </div>
 
-                                                    <div style="margin-bottom:25px">
-
-                                                    </div>
+                                                    }
 
                                                 }
+                                                <div class="clear animate_bot_tabs" style="height:20px">
 
-                                            }
-                                            <div class="clear animate_bot_tabs" style="height:20px">
+                                                </div>
+                                                <!--    Fin Elemento Premio  -->
+                                            </li>
+                                        </ul>
 
-                                            </div>
-                                            <!--    Fin Elemento Premio  -->
-                                        </li>
-
-
-
-                                    </ul>
-
-
+                                    }
                                 }
+                                else
+                                {
+
+
+                                    <div class="alert alert-info alert-dismissible fade in" style="margin-top:20px">
+
+                                        No existe registros........
+                                    </div>
+                                }
+
                             }
-
-
                         </div>
                     </div>
                 </div>
@@ -306,6 +316,10 @@
 
 
                 name = e.target.name;
+                
+                var boton = $(this);
+                $(boton).attr("disabled", true);
+             
 
                 if (name != 'excel') {
 
@@ -317,6 +331,10 @@
                     var intPremio = e.target.name;
 
                     fileData.append('intPremio', intPremio);
+                    fileData.append('intCampana', $("#SelectedCampa_aId").val());
+                    
+
+
                     $.ajax({
                         url: '@Url.Action("UploadImg", "PremioNew")',
                         type: "POST",
@@ -324,9 +342,7 @@
                         processData: false, // Not to process data
                         data: fileData,
                         success: function (result) {
-                            window.location.href = '../PremioNew/Index';
-                          
-
+                            $("#frmBuscar").submit();
                         },
                         error: function (err) {
                             $("#myModal").modal();
@@ -337,7 +353,6 @@
                     });
 
                     $("#closbtn").click(function () {
-
                         $('#myModal').modal('hide');
                     });
 

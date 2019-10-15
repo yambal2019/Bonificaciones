@@ -11,27 +11,28 @@ $(function () {
             url: $form.attr("action"),
             type: $form.attr("method"),
             data: $form.serialize()
+            
         };
 
         $.ajax(options).done(function (data) {
+
+            llamarOpen();
             var $target = $($form.attr("data-otf-target"));
             var $newHtml = $(data);
          
-
+            
             $target.replaceWith($newHtml);
             
         });
+
 
         return false;
     };
 
 
-
     $("form[data-otf-ajax='true']").submit(ajaxFormSubmit);
 
-    $(window).on("load", function (e) {
-        $("#global-loader").fadeOut("slow");
-    })
+    
 
 
 });

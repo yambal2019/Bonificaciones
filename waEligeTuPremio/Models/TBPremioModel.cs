@@ -50,6 +50,7 @@ namespace waEligeTuPremio.Models
         public SelectList ListaAnios { get; set; }
         public List<TBPremioModel> ListaPremio { get; set; }
 
+         public String Error { get; set; }
     }
 
     public class NivelPremio

@@ -101,7 +101,6 @@ namespace waEligeTuPremio.Data
             }
         }
 
-
         public static List<TBCampañaModel> SelectAll()
         {
             SqlCommand command = new SqlCommand();

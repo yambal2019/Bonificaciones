@@ -198,6 +198,7 @@
     <Compile Include="Controllers\Procesos\CampañaController.cs" />
     <Compile Include="Controllers\Procesos\ConsultorasController.cs" />
     <Compile Include="Controllers\Procesos\PremioNewController.cs" />
+    <Compile Include="Controllers\Procesos\ProcesoController.cs" />
     <Compile Include="Controllers\Seguridad\PerfilController.cs" />
     <Compile Include="Controllers\Seguridad\UsuarioController.cs" />
     <Compile Include="Data\BaseData.cs" />
@@ -386,6 +387,7 @@
     <Content Include="Views\Campaña\PremioPorCampaña.cshtml" />
     <Content Include="Views\PremioNew\_DetallePremio.cshtml" />
     <Content Include="Views\Inicio\InicioIndex.cshtml" />
+    <Content Include="Views\Proceso\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
